@@ -8,7 +8,7 @@
 
 import Foundation
 
-public typealias HTTPTransportResponse = (Data?, URLResponse?, Error?)
+public typealias HTTPTransportResponse = (Data?, HTTPURLResponse?, Error?)
 
 enum FakeHTTPTransportError: Error {
     case responseNotFound
@@ -18,7 +18,8 @@ public class FakeHTTPTransport: HTTPTransport {
     
     private let safe: ThreadSafety = platformSafe
     
-    private var responses: [URLRequest: HTTPTransportResponse] = [:]
+    private var responses: [Int: HTTPTransportResponse] = [:]
+    var interceptor: ((Data?, FakeURLResponse?, Error?) -> Void)?
     
     public var latency: DispatchTimeInterval
     public var latencyVariance: DispatchTimeInterval
@@ -30,7 +31,7 @@ public class FakeHTTPTransport: HTTPTransport {
     
     public func addFakeResponse(_ response: HTTPTransportResponse, for request: URLRequest) {
         safe.execute {
-            responses[request] = response
+            responses[request.hashValue] = response
         }
     }
     
@@ -41,14 +42,34 @@ public class FakeHTTPTransport: HTTPTransport {
     }
     
     public func task(with request: URLRequest, completion: @escaping (Data?, URLResponse?, Error?) -> Void) -> ResourceTask {
-        let response = responses[request]
-        return DispatchWorkItemTask(on: .main, latency: latency, variance: latencyVariance) {
+        let response = responses[request.hashValue]
+        
+        return DispatchWorkItemTask(on: .main, latency: latency, variance: latencyVariance) { [weak self] in
             if let r = response {
+                let fakeResponse = FakeURLResponse(originalURLRequest: request, response: r.1)
+                self?.interceptor?(r.0, fakeResponse, r.2)
                 completion(r.0, r.1, r.2)
             } else {
+                self?.interceptor?(nil, nil, FakeHTTPTransportError.responseNotFound)
                 completion(nil, nil, FakeHTTPTransportError.responseNotFound)
             }
         }
+    }
+}
+
+public class FakeURLResponse: URLResponse {
+    
+    public let originalURLRequest: URLRequest?
+    public let urlResponse: URLResponse?
+    
+    init(originalURLRequest: URLRequest, response: URLResponse?) {
+        self.originalURLRequest = originalURLRequest
+        self.urlResponse = response
+        super.init(url: originalURLRequest.url!, mimeType: nil, expectedContentLength: 0, textEncodingName: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
     }
 }
 

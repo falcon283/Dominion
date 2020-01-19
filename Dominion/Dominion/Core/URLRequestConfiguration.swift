@@ -31,7 +31,7 @@ public struct URLRequestConfiguration<O, E: Error>: ResourceConfiguration {
     
     public typealias Request = URLRequest
     public typealias Downstream = O
-
+    
     public let expiration: ResourceExpiration
     
     private let backingRequest: () -> Request
@@ -52,6 +52,29 @@ public struct URLRequestConfiguration<O, E: Error>: ResourceConfiguration {
             self.error = error.getTransformed
     }
     
+    init<TU: Transformer, TD: Transformer, TE: Transformer>(
+        route: URLConvertible,
+        method: HTTPMethod = .get,
+        headers: [String: String] = [:],
+        cachePolicy: URLRequest.CachePolicy = .returnCacheDataElseLoad,
+        timeout: TimeInterval = 60.0,
+        expiration: ResourceExpiration = .never,
+        upstream: Upstream<TU, TU.I>,
+        downstream: TD,
+        error: TE)
+        where TU.O == Data, TD.I == Data, TD.O == O, TE.I == Data, TE.O == E {
+            
+            self.init(expiration: expiration, downstream: downstream, error: error) {
+                var request = URLRequest(url: route.asUrl, cachePolicy: cachePolicy, timeoutInterval: timeout)
+                request.httpMethod = method.rawValue
+                request.allHTTPHeaderFields = headers
+                if method != .get {
+                    request.httpBody = try? upstream.transformer.getTransformed(with: upstream.input)
+                }
+                return request
+            }
+    }
+    
     public var request: Request {
         return backingRequest()
     }
@@ -59,7 +82,7 @@ public struct URLRequestConfiguration<O, E: Error>: ResourceConfiguration {
     public func transform(_ result: Data) throws -> O {
         try downstream(result)
     }
-
+    
     public func transformError(_ result: Data) throws -> Error {
         try error(result)
     }
@@ -77,83 +100,18 @@ public struct URLRequestConfiguration<O, E: Error>: ResourceConfiguration {
     }
     
     public func aggressiveConfiguration() -> URLRequestConfiguration<O, E> {
-        withCachePolicy(.reloadIgnoringLocalAndRemoteCacheData)
+        withCachePolicy(.reloadIgnoringLocalCacheData)
     }
 }
 
-public extension URLRequestConfiguration {
-    
-    init<TU: Transformer, TD: Transformer, TE: Transformer>(
-        route: URLConvertible,
-        method: HTTPMethod = .get,
-        headers: [String: String] = [:],
-        cachePolicy: URLRequest.CachePolicy = .returnCacheDataElseLoad,
-        timeout: TimeInterval = 60.0,
-        expiration: ResourceExpiration = .never,
-        upstream: Upstream<TU, TU.I>,
-        downstream: TD,
-        error: TE)
-        where TU.O == Data, TD.I == Data, TD.O == O, TE.I == Data, TE.O == E {
-                        
-            self.init(expiration: expiration, downstream: downstream, error: error) {
-                var request = URLRequest(url: route.asUrl, cachePolicy: cachePolicy, timeoutInterval: timeout)
-                request.httpMethod = method.rawValue
-                request.allHTTPHeaderFields = headers
-                if method != .get {
-                    request.httpBody = try? upstream.transformer.getTransformed(with: upstream.input)
-                }
-                return request
-            }
-    }
+public extension URLRequestConfiguration where O == Void {
     
     init(route: URLConvertible,
-        method: HTTPMethod = .get,
-        headers: [String: String] = [:],
-        cachePolicy: URLRequest.CachePolicy = .returnCacheDataElseLoad,
-        timeout: TimeInterval = 60.0,
-        expiration: ResourceExpiration = .never) {
-        
-        self.init(expiration: expiration, downstream: EmptyTransformer(), error: EmptyTransformer()) {
-            var request = URLRequest(url: route.asUrl, cachePolicy: cachePolicy, timeoutInterval: timeout)
-            request.httpMethod = method.rawValue
-            request.allHTTPHeaderFields = headers
-            return request
-        }
-    }
-}
-
-public extension URLRequestConfiguration where O: Decodable, E: Decodable {
-    
-    init<TU: Transformer>(
-        route: URLConvertible,
-        method: HTTPMethod = .get,
-        headers: [String: String] = [:],
-        cachePolicy: URLRequest.CachePolicy = .returnCacheDataElseLoad,
-        timeout: TimeInterval = 60.0,
-        expiration: ResourceExpiration = .never,
-        upstream: Upstream<TU, TU.I>)
-        where TU.O == Data {
-            
-            self.init(route: route,
-                      method: method,
-                      headers: headers,
-                      cachePolicy: cachePolicy,
-                      timeout: timeout,
-                      expiration: expiration,
-                      upstream: upstream,
-                      downstream: DecodableTransformer(),
-                      error: DecodableTransformer())
-    }
-    
-    init<I: Encodable>(
-        route: URLConvertible,
-        method: HTTPMethod = .get,
-        headers: [String: String] = [:],
-        cachePolicy: URLRequest.CachePolicy = .returnCacheDataElseLoad,
-        timeout: TimeInterval = 60.0,
-        expiration: ResourceExpiration = .never,
-        body: I,
-        encoder: JSONEncoder = JSONEncoder()) {
+         method: HTTPMethod = .get,
+         headers: [String: String] = [:],
+         cachePolicy: URLRequest.CachePolicy = .returnCacheDataElseLoad,
+         timeout: TimeInterval = 60.0,
+         expiration: ResourceExpiration = .never) {
         
         self.init(route: route,
                   method: method,
@@ -161,8 +119,8 @@ public extension URLRequestConfiguration where O: Decodable, E: Decodable {
                   cachePolicy: cachePolicy,
                   timeout: timeout,
                   expiration: expiration,
-                  upstream: Upstream(with: EncodableTransformer(encoder: encoder), using: body),
-                  downstream: DecodableTransformer(),
-                  error: DecodableTransformer())
+                  upstream: Upstream(with: EmptyTransformer(), using: ()),
+                  downstream: EmptyTransformer(),
+                  error: EmptyTransformer())
     }
 }

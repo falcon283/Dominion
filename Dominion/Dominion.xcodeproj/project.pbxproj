@@ -38,6 +38,8 @@
 		E4196A7A23D4CDF200E9D471 /* EmptyTransformer.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4196A7923D4CDF200E9D471 /* EmptyTransformer.swift */; };
 		E4196A7C23D4CE1C00E9D471 /* BlockTransformer.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4196A7B23D4CE1C00E9D471 /* BlockTransformer.swift */; };
 		E4196A8023D4D03100E9D471 /* TestsType.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4196A7F23D4D03100E9D471 /* TestsType.swift */; };
+		E41D729123D4E7AE00422D9F /* FakeHTTPTransport+Injection.swift in Sources */ = {isa = PBXBuildFile; fileRef = E41D729023D4E7AE00422D9F /* FakeHTTPTransport+Injection.swift */; };
+		E41D729323D50EF900422D9F /* URLRequestConfiguration+Codable.swift in Sources */ = {isa = PBXBuildFile; fileRef = E41D729223D50EF900422D9F /* URLRequestConfiguration+Codable.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -85,6 +87,8 @@
 		E4196A7923D4CDF200E9D471 /* EmptyTransformer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyTransformer.swift; sourceTree = "<group>"; };
 		E4196A7B23D4CE1C00E9D471 /* BlockTransformer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlockTransformer.swift; sourceTree = "<group>"; };
 		E4196A7F23D4D03100E9D471 /* TestsType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestsType.swift; sourceTree = "<group>"; };
+		E41D729023D4E7AE00422D9F /* FakeHTTPTransport+Injection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FakeHTTPTransport+Injection.swift"; sourceTree = "<group>"; };
+		E41D729223D50EF900422D9F /* URLRequestConfiguration+Codable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "URLRequestConfiguration+Codable.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -164,6 +168,7 @@
 				E4196A5523D3E40D00E9D471 /* Transformer+Codable.swift */,
 				E4196A5923D3E43E00E9D471 /* URLConvertible.swift */,
 				E4196A5723D3E42300E9D471 /* URLRequestConfiguration.swift */,
+				E41D729223D50EF900422D9F /* URLRequestConfiguration+Codable.swift */,
 				E4196A6323D473B300E9D471 /* URLSession+HTTPTransport.swift */,
 				E4196A6123D4738E00E9D471 /* URLSessionResourceTask.swift */,
 			);
@@ -190,6 +195,7 @@
 			isa = PBXGroup;
 			children = (
 				E4196A7F23D4D03100E9D471 /* TestsType.swift */,
+				E41D729023D4E7AE00422D9F /* FakeHTTPTransport+Injection.swift */,
 			);
 			path = Helper;
 			sourceTree = "<group>";
@@ -312,6 +318,7 @@
 				E4196A4C23D3E37900E9D471 /* ResourceTask.swift in Sources */,
 				E4196A7423D477CC00E9D471 /* FakeHTTPTransport.swift in Sources */,
 				E4196A5A23D3E43E00E9D471 /* URLConvertible.swift in Sources */,
+				E41D729323D50EF900422D9F /* URLRequestConfiguration+Codable.swift in Sources */,
 				E4196A5823D3E42300E9D471 /* URLRequestConfiguration.swift in Sources */,
 				E4196A4823D3E2F400E9D471 /* Dictionary+Merge.swift in Sources */,
 				E4196A6423D473B300E9D471 /* URLSession+HTTPTransport.swift in Sources */,
@@ -341,6 +348,7 @@
 				E4196A7023D4772800E9D471 /* URLRequestConfigurationTests.swift in Sources */,
 				E4196A7223D4775000E9D471 /* URLSessionResourceTaskTests.swift in Sources */,
 				E4196A6823D4757700E9D471 /* ResourceTests.swift in Sources */,
+				E41D729123D4E7AE00422D9F /* FakeHTTPTransport+Injection.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
