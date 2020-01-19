@@ -8,9 +8,13 @@
 
 import Foundation
 
+public enum TransformerFailure: Error {
+    case desiredEmpty
+}
+
 public protocol Transformer {
     associatedtype I
     associatedtype O
     
-    func getTransformed() throws -> O
+    func getTransformed(with input: I) throws -> O
 }

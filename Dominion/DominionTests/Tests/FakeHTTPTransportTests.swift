@@ -1,5 +1,5 @@
 //
-//  DominionTests.swift
+//  FakeHTTPTransportTests.swift
 //  DominionTests
 //
 //  Created by Gabriele Trabucco on 19/01/2020.
@@ -7,9 +7,8 @@
 //
 
 import XCTest
-@testable import Dominion
 
-class DominionTests: XCTestCase {
+class FakeHTTPTransportTests: XCTestCase {
 
     override func setUp() {
         // Put setup code here. This method is called before the invocation of each test method in the class.

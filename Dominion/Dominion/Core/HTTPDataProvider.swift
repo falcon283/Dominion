@@ -16,11 +16,12 @@ enum URLSessionProviderError: Error {
 open class HTTPDataProvider: ResourceProvider {
     
     public typealias Request = URLRequest
-    private let transport: HTTPTransport
 
     public var commonHeaders: [String: String] = [:]
     
-    public init(with transport: HTTPTransport) {
+    private let transport: HTTPTransport
+    
+    init(with transport: HTTPTransport) {
         self.transport = transport
     }
     
@@ -39,7 +40,7 @@ open class HTTPDataProvider: ResourceProvider {
                             do {
                                 let object = try configuration.transform(data)
                                 result(.success(.value(object)))
-                            } catch URLRequestConfigurationError.unknownDownstreamTransformer {
+                            } catch TransformerFailure.desiredEmpty {
                                 result(.success(.empty))
                             } catch {
                                 result(.failure(error))
@@ -51,6 +52,8 @@ open class HTTPDataProvider: ResourceProvider {
                         do {
                             let object = try configuration.transformError(data)
                             result(.success(.error(object)))
+                        } catch TransformerFailure.desiredEmpty where error != nil {
+                            result(.failure(error!))
                         } catch {
                             result(.failure(error))
                         }

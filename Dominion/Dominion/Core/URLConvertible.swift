@@ -11,3 +11,9 @@ import Foundation
 public protocol URLConvertible {
     var asUrl: URL { get }
 }
+
+extension URL: URLConvertible {
+    public var asUrl: URL {
+        return self
+    }
+}

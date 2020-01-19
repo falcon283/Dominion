@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		E4196A3423D3E21000E9D471 /* Dominion.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E4196A2A23D3E21000E9D471 /* Dominion.framework */; };
-		E4196A3923D3E21000E9D471 /* DominionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4196A3823D3E21000E9D471 /* DominionTests.swift */; };
 		E4196A3B23D3E21000E9D471 /* Dominion.h in Headers */ = {isa = PBXBuildFile; fileRef = E4196A2D23D3E21000E9D471 /* Dominion.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		E4196A4623D3E22D00E9D471 /* ThreadSafe.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4196A4523D3E22D00E9D471 /* ThreadSafe.swift */; };
 		E4196A4823D3E2F400E9D471 /* Dictionary+Merge.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4196A4723D3E2F400E9D471 /* Dictionary+Merge.swift */; };
@@ -26,6 +25,19 @@
 		E4196A6023D4724C00E9D471 /* HTTPTransport.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4196A5F23D4724C00E9D471 /* HTTPTransport.swift */; };
 		E4196A6223D4738E00E9D471 /* URLSessionResourceTask.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4196A6123D4738E00E9D471 /* URLSessionResourceTask.swift */; };
 		E4196A6423D473B300E9D471 /* URLSession+HTTPTransport.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4196A6323D473B300E9D471 /* URLSession+HTTPTransport.swift */; };
+		E4196A6623D4755B00E9D471 /* HTTPDataProviderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4196A6523D4755B00E9D471 /* HTTPDataProviderTests.swift */; };
+		E4196A6823D4757700E9D471 /* ResourceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4196A6723D4757700E9D471 /* ResourceTests.swift */; };
+		E4196A6A23D4759100E9D471 /* ResourceObserverTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4196A6923D4759100E9D471 /* ResourceObserverTests.swift */; };
+		E4196A6C23D475A900E9D471 /* ThreadSafeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4196A6B23D475A900E9D471 /* ThreadSafeTests.swift */; };
+		E4196A6E23D475E400E9D471 /* CodableTransformerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4196A6D23D475E400E9D471 /* CodableTransformerTests.swift */; };
+		E4196A7023D4772800E9D471 /* URLRequestConfigurationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4196A6F23D4772800E9D471 /* URLRequestConfigurationTests.swift */; };
+		E4196A7223D4775000E9D471 /* URLSessionResourceTaskTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4196A7123D4775000E9D471 /* URLSessionResourceTaskTests.swift */; };
+		E4196A7423D477CC00E9D471 /* FakeHTTPTransport.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4196A7323D477CC00E9D471 /* FakeHTTPTransport.swift */; };
+		E4196A7623D47EE200E9D471 /* DispatchWorkItemTaskTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4196A7523D47EE200E9D471 /* DispatchWorkItemTaskTests.swift */; };
+		E4196A7823D47EEE00E9D471 /* FakeHTTPTransportTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4196A7723D47EEE00E9D471 /* FakeHTTPTransportTests.swift */; };
+		E4196A7A23D4CDF200E9D471 /* EmptyTransformer.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4196A7923D4CDF200E9D471 /* EmptyTransformer.swift */; };
+		E4196A7C23D4CE1C00E9D471 /* BlockTransformer.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4196A7B23D4CE1C00E9D471 /* BlockTransformer.swift */; };
+		E4196A8023D4D03100E9D471 /* TestsType.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4196A7F23D4D03100E9D471 /* TestsType.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -43,7 +55,6 @@
 		E4196A2D23D3E21000E9D471 /* Dominion.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Dominion.h; sourceTree = "<group>"; };
 		E4196A2E23D3E21000E9D471 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		E4196A3323D3E21000E9D471 /* DominionTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = DominionTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		E4196A3823D3E21000E9D471 /* DominionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DominionTests.swift; sourceTree = "<group>"; };
 		E4196A3A23D3E21000E9D471 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		E4196A4523D3E22D00E9D471 /* ThreadSafe.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThreadSafe.swift; sourceTree = "<group>"; };
 		E4196A4723D3E2F400E9D471 /* Dictionary+Merge.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Dictionary+Merge.swift"; sourceTree = "<group>"; };
@@ -61,6 +72,19 @@
 		E4196A5F23D4724C00E9D471 /* HTTPTransport.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HTTPTransport.swift; sourceTree = "<group>"; };
 		E4196A6123D4738E00E9D471 /* URLSessionResourceTask.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLSessionResourceTask.swift; sourceTree = "<group>"; };
 		E4196A6323D473B300E9D471 /* URLSession+HTTPTransport.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "URLSession+HTTPTransport.swift"; sourceTree = "<group>"; };
+		E4196A6523D4755B00E9D471 /* HTTPDataProviderTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HTTPDataProviderTests.swift; sourceTree = "<group>"; };
+		E4196A6723D4757700E9D471 /* ResourceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResourceTests.swift; sourceTree = "<group>"; };
+		E4196A6923D4759100E9D471 /* ResourceObserverTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResourceObserverTests.swift; sourceTree = "<group>"; };
+		E4196A6B23D475A900E9D471 /* ThreadSafeTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThreadSafeTests.swift; sourceTree = "<group>"; };
+		E4196A6D23D475E400E9D471 /* CodableTransformerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CodableTransformerTests.swift; sourceTree = "<group>"; };
+		E4196A6F23D4772800E9D471 /* URLRequestConfigurationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLRequestConfigurationTests.swift; sourceTree = "<group>"; };
+		E4196A7123D4775000E9D471 /* URLSessionResourceTaskTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLSessionResourceTaskTests.swift; sourceTree = "<group>"; };
+		E4196A7323D477CC00E9D471 /* FakeHTTPTransport.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FakeHTTPTransport.swift; sourceTree = "<group>"; };
+		E4196A7523D47EE200E9D471 /* DispatchWorkItemTaskTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DispatchWorkItemTaskTests.swift; sourceTree = "<group>"; };
+		E4196A7723D47EEE00E9D471 /* FakeHTTPTransportTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FakeHTTPTransportTests.swift; sourceTree = "<group>"; };
+		E4196A7923D4CDF200E9D471 /* EmptyTransformer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyTransformer.swift; sourceTree = "<group>"; };
+		E4196A7B23D4CE1C00E9D471 /* BlockTransformer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlockTransformer.swift; sourceTree = "<group>"; };
+		E4196A7F23D4D03100E9D471 /* TestsType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestsType.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -113,8 +137,9 @@
 		E4196A3723D3E21000E9D471 /* DominionTests */ = {
 			isa = PBXGroup;
 			children = (
-				E4196A3823D3E21000E9D471 /* DominionTests.swift */,
+				E4196A7E23D4D01800E9D471 /* Helper */,
 				E4196A3A23D3E21000E9D471 /* Info.plist */,
+				E4196A7D23D4CFAC00E9D471 /* Tests */,
 			);
 			path = DominionTests;
 			sourceTree = "<group>";
@@ -122,7 +147,10 @@
 		E4196A4423D3E21B00E9D471 /* Core */ = {
 			isa = PBXGroup;
 			children = (
+				E4196A7B23D4CE1C00E9D471 /* BlockTransformer.swift */,
 				E4196A4723D3E2F400E9D471 /* Dictionary+Merge.swift */,
+				E4196A7923D4CDF200E9D471 /* EmptyTransformer.swift */,
+				E4196A7323D477CC00E9D471 /* FakeHTTPTransport.swift */,
 				E4196A5B23D3E48600E9D471 /* HTTPDataProvider.swift */,
 				E4196A5F23D4724C00E9D471 /* HTTPTransport.swift */,
 				E4196A5D23D3E4D500E9D471 /* Resource.swift */,
@@ -140,6 +168,30 @@
 				E4196A6123D4738E00E9D471 /* URLSessionResourceTask.swift */,
 			);
 			path = Core;
+			sourceTree = "<group>";
+		};
+		E4196A7D23D4CFAC00E9D471 /* Tests */ = {
+			isa = PBXGroup;
+			children = (
+				E4196A6D23D475E400E9D471 /* CodableTransformerTests.swift */,
+				E4196A7523D47EE200E9D471 /* DispatchWorkItemTaskTests.swift */,
+				E4196A7723D47EEE00E9D471 /* FakeHTTPTransportTests.swift */,
+				E4196A6523D4755B00E9D471 /* HTTPDataProviderTests.swift */,
+				E4196A6923D4759100E9D471 /* ResourceObserverTests.swift */,
+				E4196A6723D4757700E9D471 /* ResourceTests.swift */,
+				E4196A6B23D475A900E9D471 /* ThreadSafeTests.swift */,
+				E4196A6F23D4772800E9D471 /* URLRequestConfigurationTests.swift */,
+				E4196A7123D4775000E9D471 /* URLSessionResourceTaskTests.swift */,
+			);
+			path = Tests;
+			sourceTree = "<group>";
+		};
+		E4196A7E23D4D01800E9D471 /* Helper */ = {
+			isa = PBXGroup;
+			children = (
+				E4196A7F23D4D03100E9D471 /* TestsType.swift */,
+			);
+			path = Helper;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -208,6 +260,7 @@
 					};
 					E4196A3223D3E21000E9D471 = {
 						CreatedOnToolsVersion = 11.2.1;
+						LastSwiftMigration = 1120;
 					};
 				};
 			};
@@ -257,6 +310,7 @@
 				E4196A5623D3E40D00E9D471 /* Transformer+Codable.swift in Sources */,
 				E4196A6223D4738E00E9D471 /* URLSessionResourceTask.swift in Sources */,
 				E4196A4C23D3E37900E9D471 /* ResourceTask.swift in Sources */,
+				E4196A7423D477CC00E9D471 /* FakeHTTPTransport.swift in Sources */,
 				E4196A5A23D3E43E00E9D471 /* URLConvertible.swift in Sources */,
 				E4196A5823D3E42300E9D471 /* URLRequestConfiguration.swift in Sources */,
 				E4196A4823D3E2F400E9D471 /* Dictionary+Merge.swift in Sources */,
@@ -264,8 +318,10 @@
 				E4196A4E23D3E3B000E9D471 /* ResourceResponse.swift in Sources */,
 				E4196A4A23D3E30A00E9D471 /* ResourceObserver.swift in Sources */,
 				E4196A5023D3E3CA00E9D471 /* ResourceProvider.swift in Sources */,
+				E4196A7A23D4CDF200E9D471 /* EmptyTransformer.swift in Sources */,
 				E4196A5223D3E3DE00E9D471 /* ResourceConfiguration.swift in Sources */,
 				E4196A5C23D3E48600E9D471 /* HTTPDataProvider.swift in Sources */,
+				E4196A7C23D4CE1C00E9D471 /* BlockTransformer.swift in Sources */,
 				E4196A4623D3E22D00E9D471 /* ThreadSafe.swift in Sources */,
 				E4196A5423D3E3F900E9D471 /* Transformer.swift in Sources */,
 			);
@@ -275,7 +331,16 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E4196A3923D3E21000E9D471 /* DominionTests.swift in Sources */,
+				E4196A6A23D4759100E9D471 /* ResourceObserverTests.swift in Sources */,
+				E4196A6E23D475E400E9D471 /* CodableTransformerTests.swift in Sources */,
+				E4196A7623D47EE200E9D471 /* DispatchWorkItemTaskTests.swift in Sources */,
+				E4196A7823D47EEE00E9D471 /* FakeHTTPTransportTests.swift in Sources */,
+				E4196A6623D4755B00E9D471 /* HTTPDataProviderTests.swift in Sources */,
+				E4196A8023D4D03100E9D471 /* TestsType.swift in Sources */,
+				E4196A6C23D475A900E9D471 /* ThreadSafeTests.swift in Sources */,
+				E4196A7023D4772800E9D471 /* URLRequestConfigurationTests.swift in Sources */,
+				E4196A7223D4775000E9D471 /* URLSessionResourceTaskTests.swift in Sources */,
+				E4196A6823D4757700E9D471 /* ResourceTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -465,6 +530,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				INFOPLIST_FILE = DominionTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -474,6 +540,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = it.gtrabucco.DominionTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -483,6 +550,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				INFOPLIST_FILE = DominionTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
