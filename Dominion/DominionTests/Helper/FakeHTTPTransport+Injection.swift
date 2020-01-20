@@ -8,17 +8,17 @@
 
 import Foundation
 
-import Dominion
+@testable import Dominion
 
 extension FakeHTTPTransport {
     func inject<O, E: Error>(_ configuration: URLRequestConfiguration<O, E>, data: Data?, statusCode: Int) {
         let isValid = 200..<300 ~= statusCode
-        addFakeResponse((isValid ? data : nil,
+        addFakeResponse((data,
                          HTTPURLResponse(url: Routes.user.asUrl,
-                                         statusCode: 200,
+                                         statusCode: statusCode,
                                          httpVersion: nil,
                                          headerFields: nil),
-                         isValid ? nil : NSError(domain: "FakeProvider", code: statusCode, userInfo: nil)),
+                         isValid ? nil : FakeHTTPTransportError.genericError),
                         for: configuration.request)
     }
 }

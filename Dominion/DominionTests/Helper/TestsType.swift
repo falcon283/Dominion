@@ -25,3 +25,35 @@ extension Routes: URLConvertible {
 struct User: Codable {
     let name: String
 }
+
+struct WrongData: Codable {
+    let unknown: String
+}
+
+struct ApiError: Codable, Error {
+    let code: Int
+}
+
+extension Result where Success == Response<User> {
+    
+    var response: Response<User>? {
+        switch self {
+        case .success(let response):
+            return response
+        case .failure:
+            return nil
+        }
+    }
+}
+
+extension Result where Success == Response<Void> {
+    
+    var response: Response<Void>? {
+        switch self {
+        case .success(let response):
+            return response
+        case .failure:
+            return nil
+        }
+    }
+}
