@@ -32,7 +32,7 @@ public class FakeHTTPTransport: HTTPTransport {
     
     public func addFakeResponse(_ response: HTTPTransportResponse, for request: URLRequest) {
         safe.execute {
-            responses[request.hashValue] = response
+            responses[request.fakeHash] = response
         }
     }
     
@@ -43,9 +43,9 @@ public class FakeHTTPTransport: HTTPTransport {
     }
     
     public func task(with request: URLRequest, completion: @escaping (Data?, URLResponse?, Error?) -> Void) -> ResourceTask {
-        let response = responses[request.hashValue]
+        let response = responses[request.fakeHash]
         
-        return DispatchWorkItemTask(on: .main, latency: latency, variance: latencyVariance) { [weak self] in
+        return FakeTransportResourceTask(on: .main, latency: latency, variance: latencyVariance) { [weak self] in
             if let r = response {
                 let fakeResponse = FakeURLResponse(originalURLRequest: request, response: r.1)
                 self?.interceptor?(r.0, fakeResponse, r.2)
@@ -55,6 +55,17 @@ public class FakeHTTPTransport: HTTPTransport {
                 completion(nil, nil, FakeHTTPTransportError.responseNotFound)
             }
         }
+    }
+}
+
+private extension URLRequest {
+    
+    var fakeHash: Int {
+        var hasher = Hasher()
+        hasher.combine(url)
+        self.httpBody.map { hasher.combine($0) }
+        self.httpMethod.map { hasher.combine($0) }
+        return hasher.finalize()
     }
 }
 
@@ -74,7 +85,7 @@ public class FakeURLResponse: URLResponse {
     }
 }
 
-public class DispatchWorkItemTask: ResourceTask {
+public final class FakeTransportResourceTask: ResourceTask {
     
     private let task: () -> Void
     private let queue: DispatchQueue

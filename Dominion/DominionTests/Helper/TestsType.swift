@@ -17,7 +17,7 @@ extension Routes: URLConvertible {
     var asUrl: URL {
         switch self {
         case .user:
-            return URL(string: "https://fakeurl.com/me")!
+            return URL(string: "https://api.myjson.com/bins/vlg10")!
         }
     }
 }
@@ -32,6 +32,18 @@ struct WrongData: Codable {
 
 struct ApiError: Codable, Error {
     let code: Int
+}
+
+var userData: Data {
+    try! JSONEncoder().encode(User(name: "Gabriele"))
+}
+
+var wrongData: Data {
+    try! JSONEncoder().encode(WrongData(unknown: "unknown"))
+}
+
+var apiErrorData: Data {
+    try! JSONEncoder().encode(ApiError(code: 1234))
 }
 
 extension Result where Success == Response<User> {

@@ -8,7 +8,15 @@
 
 import Foundation
 
+
 public class Resource<C: ResourceConfiguration, P: ResourceProvider> where C.Request == P.Request {
+    
+    enum ResourceState {
+        case initial
+        case data(Response<C.Downstream>)
+        case error(Error)
+    }
+    
     
     private let safe = platformSafe
     private var observers: [ResourceObserver<Response<C.Downstream>>] = []
@@ -16,17 +24,18 @@ public class Resource<C: ResourceConfiguration, P: ResourceProvider> where C.Req
     private let configuration: C
     
     private var task: ResourceTask?
-    private var taskResult: Result<Response<C.Downstream>, Error>? {
+    
+    private(set) var state: ResourceState = .initial {
         didSet {
-            switch taskResult {
-            case .success(let response):
+            switch state {
+            case .data(let response):
                 switch response {
                 case .value, .emptyValue:
                     resultDate = Date()
                 case .error, .emptyError:
                     resultDate = nil
                 }
-            case .failure, .none:
+            case .error, .initial:
                 resultDate = nil
             }
         }
@@ -54,7 +63,7 @@ public class Resource<C: ResourceConfiguration, P: ResourceProvider> where C.Req
         }
     }
     
-    private var isRunning: Bool {
+    var isRunning: Bool {
         self.task != nil
     }
  
@@ -64,7 +73,7 @@ public class Resource<C: ResourceConfiguration, P: ResourceProvider> where C.Req
 
     public func refresh() {
         safe.execute {
-            guard isRunning == false else { return }
+            guard observers.count > 0, isRunning == false else { return }
             perform(with: configuration.aggressiveConfiguration())
         }
     }
@@ -74,20 +83,37 @@ public class Resource<C: ResourceConfiguration, P: ResourceProvider> where C.Req
         // If running let the task complete and all the observers will be notified.
         guard isRunning == false else { return }
         
-        if isResourceExpired {
+        switch state {
+        case .initial:
             perform(with: configuration.aggressiveConfiguration())
-        } else if let result = taskResult {
-            observer.emit(result)
-        } else {
+        case .data(let response):
+            if isResourceExpired {
+                perform(with: configuration.aggressiveConfiguration())
+            } else {
+                observer.emit(.success(response))
+            }
+        case .error:
             perform(with: configuration)
+        }
+    }
+    
+    private func updateState(with result: Result<Response<C.Downstream>, Error>) {
+        switch result {
+        case .success(let response):
+            state = .data(response)
+        case .failure(let error):
+            state = .error(error)
         }
     }
     
     private func perform(with configuration: C) {
         let task = provider.perform(using: configuration) { [weak self] result in
             self?.safe.execute {
-                self?.taskResult = result
+                self?.updateState(with: result)
+                
                 self?.observers.forEach { $0.emit(result) }
+                // In this place because to avoid endless loop starting a refresh
+                // or another addObserver from the observer emission.
                 self?.task = nil
             }
         }

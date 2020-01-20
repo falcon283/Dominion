@@ -21,13 +21,15 @@ open class HTTPDataProvider: ResourceProvider {
     
     private let transport: HTTPTransport
     
-    init(with transport: HTTPTransport) {
+    public init(with transport: HTTPTransport) {
         self.transport = transport
     }
     
     public func perform<C>(using configuration: C,
                            result: @escaping (Result<Response<C.Downstream>, Error>) -> Void) -> ResourceTask
         where C : ResourceConfiguration, Request == C.Request {
+            
+            let result = Thread.isMainThread ? result : { r in DispatchQueue.main.async { result(r) }}
             
             var request = configuration.request
             request.allHTTPHeaderFields = commonHeaders + (request.allHTTPHeaderFields ?? [:])

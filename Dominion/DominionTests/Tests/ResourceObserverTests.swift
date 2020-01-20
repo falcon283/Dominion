@@ -7,27 +7,41 @@
 //
 
 import XCTest
+@testable import Dominion
 
 class ResourceObserverTests: XCTestCase {
 
-    override func setUp() {
-        // Put setup code here. This method is called before the invocation of each test method in the class.
+    var tokens: [CancellationToken] = []
+    
+    func testDeinitToken() {
+        
+        let e = expectation(description: "Deinit Token")
+        
+        DeinitCancellationToken {
+            e.fulfill()
+        }.store(in: &tokens)
+        
+        tokens.removeAll()
+        
+        wait(for: [e], timeout: 1)
     }
 
-    override func tearDown() {
-        // Put teardown code here. This method is called after the invocation of each test method in the class.
-    }
+    func testResourceObserver() {
+ 
+        let e = expectation(description: "Resource Observer")
 
-    func testExample() {
-        // This is an example of a functional test case.
-        // Use XCTAssert and related functions to verify your tests produce the correct results.
-    }
-
-    func testPerformanceExample() {
-        // This is an example of a performance test case.
-        self.measure {
-            // Put the code you want to measure the time of here.
+        let observer = ResourceObserver<Int> { result in
+            switch result {
+            case .success(let value):
+                XCTAssert(value == 5, "Wrong Expected Value")
+            case .failure:
+                XCTAssert(false, "A result success is expected")
+            }
+            e.fulfill()
         }
+        
+        observer.emit(.success(5))
+        
+        wait(for: [e], timeout: 1)
     }
-
 }

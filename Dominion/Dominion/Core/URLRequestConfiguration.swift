@@ -106,6 +106,29 @@ public struct URLRequestConfiguration<O, E: Error>: ResourceConfiguration {
 
 public extension URLRequestConfiguration where O == Void {
     
+    init<TE: Transformer>(route: URLConvertible,
+         method: HTTPMethod = .get,
+         headers: [String: String] = [:],
+         cachePolicy: URLRequest.CachePolicy = .returnCacheDataElseLoad,
+         timeout: TimeInterval = 60.0,
+         expiration: ResourceExpiration = .never,
+         error: TE)
+        where TE.I == Data, TE.O == E {
+        
+        self.init(route: route,
+                  method: method,
+                  headers: headers,
+                  cachePolicy: cachePolicy,
+                  timeout: timeout,
+                  expiration: expiration,
+                  upstream: Upstream(with: EmptyTransformer(), using: ()),
+                  downstream: EmptyTransformer(),
+                  error: error)
+    }
+}
+
+public extension URLRequestConfiguration where O == Void, E == Error {
+    
     init(route: URLConvertible,
          method: HTTPMethod = .get,
          headers: [String: String] = [:],

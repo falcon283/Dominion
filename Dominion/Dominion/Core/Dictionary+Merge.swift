@@ -12,6 +12,6 @@ public extension Dictionary {
     
     // Merge, right values override left values
     static func +(lhs: Self, rhs: Self) -> Self {
-        return lhs.merging(rhs) { $1 }
+        lhs.merging(rhs) { $1 }
     }
 }

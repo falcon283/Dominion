@@ -7,27 +7,48 @@
 //
 
 import XCTest
+@testable import Dominion
 
 class ThreadSafeTests: XCTestCase {
 
-    override func setUp() {
-        // Put setup code here. This method is called before the invocation of each test method in the class.
-    }
-
-    override func tearDown() {
-        // Put teardown code here. This method is called after the invocation of each test method in the class.
-    }
-
-    func testExample() {
-        // This is an example of a functional test case.
-        // Use XCTAssert and related functions to verify your tests produce the correct results.
-    }
-
-    func testPerformanceExample() {
-        // This is an example of a performance test case.
-        self.measure {
-            // Put the code you want to measure the time of here.
+    var array: [Int] = []
+    
+    func testThreadSafe() {
+        
+        if #available(iOS 10.0, *) {
+            let safe = ThreadSafe()
+            
+            let e = expectation(description: "Thread Safe")
+            
+            DispatchQueue.concurrentPerform(iterations: 1000) { iteration in
+                safe.execute {
+                    array.append(iteration)
+                    
+                    if array.count == 1000  {
+                        e.fulfill()
+                    }
+                }
+            }
+            
+            wait(for: [e], timeout: 5)
         }
     }
+    
+    func testThreadSafeLegacy() {
+        
+        let safe = ThreadSafeLegacy()
+        let e = expectation(description: "Thread Safe Legacy")
 
+        DispatchQueue.concurrentPerform(iterations: 1000) { iteration in
+            safe.execute {
+                array.append(iteration)
+                
+                if array.count == 1000  {
+                    e.fulfill()
+                }
+            }
+        }
+        
+        wait(for: [e], timeout: 5)
+    }
 }

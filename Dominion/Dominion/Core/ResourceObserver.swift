@@ -16,12 +16,8 @@ public protocol CancellationToken: class { }
 
 public extension CancellationToken {
     
-    func store(in array: inout [CancellationToken], using safe: ThreadSafety? = platformSafe) {
-        if let safe = safe {
-            safe.execute {
-                array.append(self)
-            }
-        } else {
+    func store(in array: inout [CancellationToken], using safe: ThreadSafety = platformSafe) {
+        safe.execute {
             array.append(self)
         }
     }

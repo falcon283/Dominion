@@ -7,27 +7,83 @@
 //
 
 import XCTest
+@testable import Dominion
 
 class FakeHTTPTransportTests: XCTestCase {
-
-    override func setUp() {
-        // Put setup code here. This method is called before the invocation of each test method in the class.
-    }
-
-    override func tearDown() {
-        // Put teardown code here. This method is called after the invocation of each test method in the class.
-    }
-
-    func testExample() {
-        // This is an example of a functional test case.
-        // Use XCTAssert and related functions to verify your tests produce the correct results.
-    }
-
-    func testPerformanceExample() {
-        // This is an example of a performance test case.
-        self.measure {
-            // Put the code you want to measure the time of here.
+    
+    let provider = FakeHTTPTransport(latency: .milliseconds(70), latencyVariance: .milliseconds(10))
+    
+    func testResponseFoundSuccess() {
+        
+        let e = expectation(description: "Response Success")
+        
+        let configuration = URLRequestConfiguration<User, ApiError>(route: Routes.user)
+        
+        provider.inject(configuration, data: userData, statusCode: 200)
+        
+        let task = provider.task(with: configuration.request) { (data, response, error) in
+            XCTAssert(data != nil, "Data should not be nil")
+            XCTAssert(response != nil, "Response should not be nil")
+            XCTAssert(error == nil, "Error should be nil")
+            e.fulfill()
         }
+        task.resume()
+        
+        wait(for: [e], timeout: 1)
     }
-
+    
+    func testResponseFoundError() {
+        
+        let e = expectation(description: "Response Error")
+        
+        let configuration = URLRequestConfiguration<User, ApiError>(route: Routes.user)
+        
+        provider.inject(configuration, data: apiErrorData, statusCode: 400)
+        
+        let task = provider.task(with: configuration.request) { (data, response, error) in
+            XCTAssert(data != nil, "Data should not be nil")
+            XCTAssert(response != nil, "Response should not be nil")
+            XCTAssert(error != nil, "Error should not be nil")
+            e.fulfill()
+        }
+        task.resume()
+        
+        wait(for: [e], timeout: 1)
+    }
+    
+    func testResponseNotFound() {
+        let e = expectation(description: "Response Not Found")
+        
+        let configuration = URLRequestConfiguration<User, ApiError>(route: Routes.user)
+        
+        let task = provider.task(with: configuration.request) { (data, response, error) in
+            XCTAssert(data == nil, "Data should be nil")
+            XCTAssert(response == nil, "Response should be nil")
+            XCTAssert((error as? FakeHTTPTransportError) == .responseNotFound, "Response should be unknown")
+            e.fulfill()
+        }
+        task.resume()
+        
+        wait(for: [e], timeout: 1)
+    }
+    
+    func testCleanUp() {
+        let e = expectation(description: "Clenup")
+        
+        let configuration = URLRequestConfiguration<User, ApiError>(route: Routes.user)
+        
+        provider.inject(configuration, data: userData, statusCode: 200)
+        
+        provider.cleanup()
+        
+        let task = provider.task(with: configuration.request) { (data, response, error) in
+            XCTAssert(data == nil, "Data should be nil")
+            XCTAssert(response == nil, "Response should be nil")
+            XCTAssert((error as? FakeHTTPTransportError) == .responseNotFound, "Response should be unknown")
+            e.fulfill()
+        }
+        task.resume()
+        
+        wait(for: [e], timeout: 1)
+    }
 }

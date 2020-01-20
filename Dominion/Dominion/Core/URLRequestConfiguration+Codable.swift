@@ -8,7 +8,7 @@
 
 import Foundation
 
-public extension URLRequestConfiguration where O: Decodable {
+public extension URLRequestConfiguration where O: Decodable, E == Error {
     
     init(route: URLConvertible,
          method: HTTPMethod = .get,

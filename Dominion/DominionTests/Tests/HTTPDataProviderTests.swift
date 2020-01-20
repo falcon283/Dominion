@@ -11,19 +11,7 @@ import XCTest
 @testable import Dominion
 
 class HTTPDataProviderTests: XCTestCase {
-    
-    private var responseData: Data {
-        try! JSONEncoder().encode(User(name: "Gabriele"))
-    }
-    
-    private var wrongData: Data {
-        try! JSONEncoder().encode(WrongData(unknown: "unknown"))
-    }
-    
-    private var errorData: Data {
-        try! JSONEncoder().encode(ApiError(code: 1234))
-    }
-    
+        
     private var transport: FakeHTTPTransport!
     private var provider: HTTPDataProvider!
     
@@ -49,7 +37,7 @@ class HTTPDataProviderTests: XCTestCase {
         
         let configuration = URLRequestConfiguration<Void, Error>(route: Routes.user, headers: ["user": "user"])
         
-        transport.inject(configuration, data: responseData, statusCode: 200)
+        transport.inject(configuration, data: userData, statusCode: 200)
         
         let task = provider.perform(using: configuration) { _ in }
         task.resume()
@@ -64,7 +52,7 @@ class HTTPDataProviderTests: XCTestCase {
                 
         let configuration = URLRequestConfiguration<User, Error>(route: Routes.user)
         
-        transport.inject(configuration, data: responseData, statusCode: 200)
+        transport.inject(configuration, data: userData, statusCode: 200)
         
         let task = provider.perform(using: configuration) { result in
             switch result.response {
@@ -112,7 +100,7 @@ class HTTPDataProviderTests: XCTestCase {
                 
         let configuration = URLRequestConfiguration<Void, Error>(route: Routes.user)
         
-        transport.inject(configuration, data: responseData, statusCode: 200)
+        transport.inject(configuration, data: userData, statusCode: 200)
         
         let task = provider.perform(using: configuration) { result in
             switch result.response {
@@ -160,7 +148,7 @@ class HTTPDataProviderTests: XCTestCase {
                 
         let configuration = URLRequestConfiguration<User, ApiError>(route: Routes.user)
         
-        transport.inject(configuration, data: errorData, statusCode: 400)
+        transport.inject(configuration, data: apiErrorData, statusCode: 400)
         
         let task = provider.perform(using: configuration) { result in
             switch result.response {
@@ -208,7 +196,7 @@ class HTTPDataProviderTests: XCTestCase {
                 
         let configuration = URLRequestConfiguration<Void, Error>(route: Routes.user)
         
-        transport.inject(configuration, data: responseData, statusCode: 400)
+        transport.inject(configuration, data: userData, statusCode: 400)
         
         let task = provider.perform(using: configuration) { result in
             switch result.response {

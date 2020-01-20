@@ -10,6 +10,8 @@ import Foundation
 
 public struct EmptyTransformer<I, O>: Transformer {
     
+    public init() { }
+    
     public func getTransformed(with input: I?) throws -> O {
         throw TransformerFailure.desiredEmpty
     }
