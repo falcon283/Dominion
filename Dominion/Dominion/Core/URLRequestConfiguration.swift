@@ -36,8 +36,8 @@ public struct URLRequestConfiguration<O, E: Error>: ResourceConfiguration {
     
     private let backingRequest: () -> Request
     
-    private let downstream: (Data) throws -> O
-    private let error: (Data) throws -> E
+    private let downstream: (Data?) throws -> O
+    private let error: (Data?) throws -> E
     
     public init<TD: Transformer, TE: Transformer>(
         expiration: ResourceExpiration = .never,
@@ -79,11 +79,11 @@ public struct URLRequestConfiguration<O, E: Error>: ResourceConfiguration {
         return backingRequest()
     }
     
-    public func transform(_ result: Data) throws -> O {
+    public func transform(_ result: Data?) throws -> O {
         try downstream(result)
     }
     
-    public func transformError(_ result: Data) throws -> Error {
+    public func transformError(_ result: Data?) throws -> Error {
         try error(result)
     }
     

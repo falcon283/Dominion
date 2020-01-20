@@ -16,7 +16,8 @@ public struct BlockTransformer<I, O>: Transformer {
         self.transform = closure
     }
     
-    public func getTransformed(with input: I) throws -> O {
-        try transform(input)
+    public func getTransformed(with input: I?) throws -> O {
+        guard let input = input else { throw TransformerFailure.missingData }
+        return try transform(input)
     }
 }

@@ -10,11 +10,12 @@ import Foundation
 
 public enum TransformerFailure: Error {
     case desiredEmpty
+    case missingData
 }
 
 public protocol Transformer {
     associatedtype I
     associatedtype O
     
-    func getTransformed(with input: I) throws -> O
+    func getTransformed(with input: I?) throws -> O
 }

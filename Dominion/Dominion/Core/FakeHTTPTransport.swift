@@ -12,6 +12,7 @@ public typealias HTTPTransportResponse = (Data?, HTTPURLResponse?, Error?)
 
 enum FakeHTTPTransportError: Error {
     case responseNotFound
+    case genericError
 }
 
 public class FakeHTTPTransport: HTTPTransport {

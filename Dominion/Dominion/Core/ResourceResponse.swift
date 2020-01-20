@@ -10,6 +10,7 @@ import Foundation
 
 public enum Response<T> {
     case value(T)
+    case emptyValue
     case error(Error)
-    case empty
+    case emptyError(Error)
 }

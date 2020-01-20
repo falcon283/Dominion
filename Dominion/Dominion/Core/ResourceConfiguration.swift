@@ -23,6 +23,6 @@ public protocol ResourceConfiguration {
     
     var request: Request { get }
     
-    func transform(_ result: Data) throws -> Downstream
-    func transformError(_ result: Data) throws -> Error
+    func transform(_ result: Data?) throws -> Downstream
+    func transformError(_ result: Data?) throws -> Error
 }

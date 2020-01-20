@@ -8,7 +8,7 @@
 
 import Foundation
 
-enum URLSessionProviderError: Error {
+enum HTTPDataProviderError: Error {
     case unknown
     case invalidResponse
 }
@@ -36,34 +36,28 @@ open class HTTPDataProvider: ResourceProvider {
                 if let response = response as? HTTPURLResponse {
 
                     if (200..<300) ~= response.statusCode {
-                        if let data = data {
-                            do {
-                                let object = try configuration.transform(data)
-                                result(.success(.value(object)))
-                            } catch TransformerFailure.desiredEmpty {
-                                result(.success(.empty))
-                            } catch {
-                                result(.failure(error))
-                            }
-                        } else {
-                            result(.success(.empty))
-                        }
-                    } else if let data = data {
                         do {
-                            let object = try configuration.transformError(data)
-                            result(.success(.error(object)))
-                        } catch TransformerFailure.desiredEmpty where error != nil {
-                            result(.failure(error!))
+                            let object = try configuration.transform(data)
+                            result(.success(.value(object)))
+                        } catch TransformerFailure.desiredEmpty {
+                            result(.success(.emptyValue))
                         } catch {
                             result(.failure(error))
                         }
                     } else if let error = error {
-                        result(.failure(error))
+                        do {
+                            let object = try configuration.transformError(data)
+                            result(.success(.error(object)))
+                        } catch TransformerFailure.desiredEmpty {
+                            result(.success(.emptyError(error)))
+                        } catch {
+                            result(.failure(error))
+                        }
                     } else {
-                        result(.failure(URLSessionProviderError.unknown))
+                        result(.failure(HTTPDataProviderError.unknown))
                     }
                 } else {
-                    result(.failure(URLSessionProviderError.invalidResponse))
+                    result(.failure(HTTPDataProviderError.invalidResponse))
                 }
             }
     }

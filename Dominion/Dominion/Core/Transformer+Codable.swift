@@ -18,8 +18,9 @@ public struct EncodableTransformer<I: Encodable>: Transformer {
         self.encoder = encoder
     }
     
-    public func getTransformed(with input: I) throws -> O {
-        try encoder.encode(input)
+    public func getTransformed(with input: I?) throws -> O {
+        guard let input = input else { throw TransformerFailure.missingData }
+        return try encoder.encode(input)
     }
 }
 
@@ -33,7 +34,8 @@ public struct DecodableTransformer<O: Decodable>: Transformer {
         self.decoder = decoder
     }
     
-    public func getTransformed(with input: I) throws -> O {
-        try decoder.decode(O.self, from: input)
+    public func getTransformed(with input: I?) throws -> O {
+        guard let input = input else { throw TransformerFailure.missingData }
+        return try decoder.decode(O.self, from: input)
     }
 }

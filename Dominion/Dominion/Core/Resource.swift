@@ -21,9 +21,9 @@ public class Resource<C: ResourceConfiguration, P: ResourceProvider> where C.Req
             switch taskResult {
             case .success(let response):
                 switch response {
-                case .value, .empty:
+                case .value, .emptyValue:
                     resultDate = Date()
-                case .error:
+                case .error, .emptyError:
                     resultDate = nil
                 }
             case .failure, .none:
