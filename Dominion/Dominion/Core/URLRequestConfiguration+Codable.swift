@@ -15,7 +15,8 @@ public extension URLRequestConfiguration where O: Decodable, E == Error {
          headers: [String: String] = [:],
          cachePolicy: URLRequest.CachePolicy = .returnCacheDataElseLoad,
          timeout: TimeInterval = 60.0,
-         expiration: ResourceExpiration = .never) {
+         expiration: ResourceExpiration = .never,
+         downstream: DecodableTransformer<O> = .init()) {
         
         self.init(route: route,
                   method: method,
@@ -24,7 +25,7 @@ public extension URLRequestConfiguration where O: Decodable, E == Error {
                   timeout: timeout,
                   expiration: expiration,
                   upstream: Upstream(with: EmptyTransformer(), using: ()),
-                  downstream: DecodableTransformer(),
+                  downstream: downstream,
                   error: EmptyTransformer())
     }
     
@@ -35,7 +36,8 @@ public extension URLRequestConfiguration where O: Decodable, E == Error {
         cachePolicy: URLRequest.CachePolicy = .returnCacheDataElseLoad,
         timeout: TimeInterval = 60.0,
         expiration: ResourceExpiration = .never,
-        upstream: Upstream<TU, TU.I>)
+        upstream: Upstream<TU, TU.I>,
+        downstream: DecodableTransformer<O> = .init())
         where TU.O == Data {
             
             self.init(route: route,
@@ -45,7 +47,7 @@ public extension URLRequestConfiguration where O: Decodable, E == Error {
                       timeout: timeout,
                       expiration: expiration,
                       upstream: upstream,
-                      downstream: DecodableTransformer(),
+                      downstream: downstream,
                       error: EmptyTransformer())
     }
     
@@ -57,7 +59,8 @@ public extension URLRequestConfiguration where O: Decodable, E == Error {
         timeout: TimeInterval = 60.0,
         expiration: ResourceExpiration = .never,
         body: I,
-        encoder: JSONEncoder = JSONEncoder()) {
+        encoder: JSONEncoder = JSONEncoder(),
+        downstream: DecodableTransformer<O> = .init()) {
         
         self.init(route: route,
                   method: method,
@@ -66,7 +69,7 @@ public extension URLRequestConfiguration where O: Decodable, E == Error {
                   timeout: timeout,
                   expiration: expiration,
                   upstream: Upstream(with: EncodableTransformer(encoder: encoder), using: body),
-                  downstream: DecodableTransformer(),
+                  downstream: downstream,
                   error: EmptyTransformer())
     }
 }
@@ -78,7 +81,9 @@ public extension URLRequestConfiguration where O: Decodable, E: Decodable {
          headers: [String: String] = [:],
          cachePolicy: URLRequest.CachePolicy = .returnCacheDataElseLoad,
          timeout: TimeInterval = 60.0,
-         expiration: ResourceExpiration = .never) {
+         expiration: ResourceExpiration = .never,
+         downstream: DecodableTransformer<O> = .init(),
+         error: DecodableTransformer<E> = .init()) {
         
         self.init(route: route,
                   method: method,
@@ -87,8 +92,8 @@ public extension URLRequestConfiguration where O: Decodable, E: Decodable {
                   timeout: timeout,
                   expiration: expiration,
                   upstream: Upstream(with: EmptyTransformer(), using: ()),
-                  downstream: DecodableTransformer(),
-                  error: DecodableTransformer())
+                  downstream: downstream,
+                  error: error)
     }
     
     init<TU: Transformer>(
@@ -98,18 +103,21 @@ public extension URLRequestConfiguration where O: Decodable, E: Decodable {
         cachePolicy: URLRequest.CachePolicy = .returnCacheDataElseLoad,
         timeout: TimeInterval = 60.0,
         expiration: ResourceExpiration = .never,
-        upstream: Upstream<TU, TU.I>)
+        upstream: Upstream<TU, TU.I>,
+        downstream: DecodableTransformer<O> = .init(),
+        error: DecodableTransformer<E> = .init())
         where TU.O == Data {
             
-            self.init(route: route,
-                      method: method,
-                      headers: headers,
-                      cachePolicy: cachePolicy,
-                      timeout: timeout,
-                      expiration: expiration,
-                      upstream: upstream,
-                      downstream: DecodableTransformer(),
-                      error: DecodableTransformer())
+            let identifier = "\(route.asUrl.absoluteString)-\(method.rawValue)"
+            self.init(identifier: identifier, expiration: expiration, downstream: downstream, error: error) {
+                var request = URLRequest(url: route.asUrl, cachePolicy: cachePolicy, timeoutInterval: timeout)
+                request.httpMethod = method.rawValue
+                request.allHTTPHeaderFields = headers
+                if method != .get {
+                    request.httpBody = try? upstream.transformer.getTransformed(with: upstream.input)
+                }
+                return request
+            }
     }
     
     init<I: Encodable>(
@@ -120,7 +128,9 @@ public extension URLRequestConfiguration where O: Decodable, E: Decodable {
         timeout: TimeInterval = 60.0,
         expiration: ResourceExpiration = .never,
         body: I,
-        encoder: JSONEncoder = JSONEncoder()) {
+        encoder: JSONEncoder = JSONEncoder(),
+        downstream: DecodableTransformer<O> = .init(),
+        error: DecodableTransformer<E> = .init()) {
         
         self.init(route: route,
                   method: method,
@@ -129,7 +139,7 @@ public extension URLRequestConfiguration where O: Decodable, E: Decodable {
                   timeout: timeout,
                   expiration: expiration,
                   upstream: Upstream(with: EncodableTransformer(encoder: encoder), using: body),
-                  downstream: DecodableTransformer(),
-                  error: DecodableTransformer())
+                  downstream: downstream,
+                  error: error)
     }
 }

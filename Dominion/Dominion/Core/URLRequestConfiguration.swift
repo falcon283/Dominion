@@ -33,6 +33,7 @@ public struct URLRequestConfiguration<O, E: Error>: ResourceConfiguration {
     public typealias Downstream = O
     
     public let expiration: ResourceExpiration
+    public let identifier: String
     
     private let backingRequest: () -> Request
     
@@ -40,19 +41,21 @@ public struct URLRequestConfiguration<O, E: Error>: ResourceConfiguration {
     private let error: (Data?) throws -> E
     
     public init<TD: Transformer, TE: Transformer>(
+        identifier: String,
         expiration: ResourceExpiration = .never,
         downstream: TD,
         error: TE,
         with request: @escaping () -> Request)
         where TD.I == Data, TD.O == O, TE.I == Data, TE.O == E {
             
+            self.identifier = identifier
             self.backingRequest = request
             self.expiration = expiration
             self.downstream = downstream.getTransformed
             self.error = error.getTransformed
     }
     
-    init<TU: Transformer, TD: Transformer, TE: Transformer>(
+    public init<TU: Transformer, TD: Transformer, TE: Transformer>(
         route: URLConvertible,
         method: HTTPMethod = .get,
         headers: [String: String] = [:],
@@ -64,7 +67,12 @@ public struct URLRequestConfiguration<O, E: Error>: ResourceConfiguration {
         error: TE)
         where TU.O == Data, TD.I == Data, TD.O == O, TE.I == Data, TE.O == E {
             
-            self.init(expiration: expiration, downstream: downstream, error: error) {
+            let identifier = [route.asUrl.host ?? "emptyHost",
+                              route.asUrl.path,
+                              method.rawValue]
+                .joined(separator: "-")
+            
+            self.init(identifier: identifier, expiration: expiration, downstream: downstream, error: error) {
                 var request = URLRequest(url: route.asUrl, cachePolicy: cachePolicy, timeoutInterval: timeout)
                 request.httpMethod = method.rawValue
                 request.allHTTPHeaderFields = headers
@@ -89,6 +97,7 @@ public struct URLRequestConfiguration<O, E: Error>: ResourceConfiguration {
     
     public func withCachePolicy(_ policy: URLRequest.CachePolicy) -> Self {
         Self.init(
+            identifier: identifier,
             expiration: expiration,
             downstream: BlockTransformer(tranform: downstream),
             error: BlockTransformer(tranform: error)) {

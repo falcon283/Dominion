@@ -42,6 +42,22 @@
 		E4196A8023D4D03100E9D471 /* TestsType.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4196A7F23D4D03100E9D471 /* TestsType.swift */; };
 		E41D729123D4E7AE00422D9F /* FakeHTTPTransport+Injection.swift in Sources */ = {isa = PBXBuildFile; fileRef = E41D729023D4E7AE00422D9F /* FakeHTTPTransport+Injection.swift */; };
 		E41D729323D50EF900422D9F /* URLRequestConfiguration+Codable.swift in Sources */ = {isa = PBXBuildFile; fileRef = E41D729223D50EF900422D9F /* URLRequestConfiguration+Codable.swift */; };
+		E4BD7AC023DA401300D883D8 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4BD7ABF23DA401300D883D8 /* AppDelegate.swift */; };
+		E4BD7AC223DA401300D883D8 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4BD7AC123DA401300D883D8 /* SceneDelegate.swift */; };
+		E4BD7AC423DA401300D883D8 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4BD7AC323DA401300D883D8 /* ContentView.swift */; };
+		E4BD7AC623DA401600D883D8 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E4BD7AC523DA401600D883D8 /* Assets.xcassets */; };
+		E4BD7AC923DA401600D883D8 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E4BD7AC823DA401600D883D8 /* Preview Assets.xcassets */; };
+		E4BD7ACC23DA401600D883D8 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E4BD7ACA23DA401600D883D8 /* LaunchScreen.storyboard */; };
+		E4BD7AE023DA41E500D883D8 /* Dominion.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E4196A2A23D3E21000E9D471 /* Dominion.framework */; };
+		E4BD7AE123DA41E500D883D8 /* Dominion.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = E4196A2A23D3E21000E9D471 /* Dominion.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		E4BD7AE723DA465F00D883D8 /* GitHubRepo.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4BD7AE623DA465F00D883D8 /* GitHubRepo.swift */; };
+		E4BD7AEA23DA47E300D883D8 /* GitHub.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4BD7AE923DA47E300D883D8 /* GitHub.swift */; };
+		E4BD7AEC23DA489000D883D8 /* GitHubAPIError.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4BD7AEB23DA489000D883D8 /* GitHubAPIError.swift */; };
+		E4BD7AEE23DA495600D883D8 /* GitHubRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4BD7AED23DA495600D883D8 /* GitHubRouter.swift */; };
+		E4BD7AF023DA564900D883D8 /* Container.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4BD7AEF23DA564900D883D8 /* Container.swift */; };
+		E4BD7AF223DA668F00D883D8 /* GitHub+API.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4BD7AF123DA668E00D883D8 /* GitHub+API.swift */; };
+		E4BD7AF423DA6C4900D883D8 /* HTTPService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4BD7AF323DA6C4900D883D8 /* HTTPService.swift */; };
+		E4BD7B2823DCFB2A00D883D8 /* HTTPServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4BD7B2723DCFB2A00D883D8 /* HTTPServiceTests.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -52,7 +68,28 @@
 			remoteGlobalIDString = E4196A2923D3E21000E9D471;
 			remoteInfo = Dominion;
 		};
+		E4BD7AE223DA41E500D883D8 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = E4196A2123D3E21000E9D471 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = E4196A2923D3E21000E9D471;
+			remoteInfo = Dominion;
+		};
 /* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		E4BD7AE423DA41E500D883D8 /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				E4BD7AE123DA41E500D883D8 /* Dominion.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		E40AE6E123D910F3009C46DA /* URLConvertibleTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLConvertibleTests.swift; sourceTree = "<group>"; };
@@ -93,6 +130,22 @@
 		E4196A7F23D4D03100E9D471 /* TestsType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestsType.swift; sourceTree = "<group>"; };
 		E41D729023D4E7AE00422D9F /* FakeHTTPTransport+Injection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FakeHTTPTransport+Injection.swift"; sourceTree = "<group>"; };
 		E41D729223D50EF900422D9F /* URLRequestConfiguration+Codable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "URLRequestConfiguration+Codable.swift"; sourceTree = "<group>"; };
+		E4BD7ABD23DA401300D883D8 /* DominionAppTest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DominionAppTest.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		E4BD7ABF23DA401300D883D8 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		E4BD7AC123DA401300D883D8 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
+		E4BD7AC323DA401300D883D8 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		E4BD7AC523DA401600D883D8 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		E4BD7AC823DA401600D883D8 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		E4BD7ACB23DA401600D883D8 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		E4BD7ACD23DA401600D883D8 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		E4BD7AE623DA465F00D883D8 /* GitHubRepo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GitHubRepo.swift; sourceTree = "<group>"; };
+		E4BD7AE923DA47E300D883D8 /* GitHub.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GitHub.swift; sourceTree = "<group>"; };
+		E4BD7AEB23DA489000D883D8 /* GitHubAPIError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GitHubAPIError.swift; sourceTree = "<group>"; };
+		E4BD7AED23DA495600D883D8 /* GitHubRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GitHubRouter.swift; sourceTree = "<group>"; };
+		E4BD7AEF23DA564900D883D8 /* Container.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Container.swift; sourceTree = "<group>"; };
+		E4BD7AF123DA668E00D883D8 /* GitHub+API.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "GitHub+API.swift"; sourceTree = "<group>"; };
+		E4BD7AF323DA6C4900D883D8 /* HTTPService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HTTPService.swift; sourceTree = "<group>"; };
+		E4BD7B2723DCFB2A00D883D8 /* HTTPServiceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HTTPServiceTests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -111,6 +164,14 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		E4BD7ABA23DA401300D883D8 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E4BD7AE023DA41E500D883D8 /* Dominion.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
@@ -119,7 +180,9 @@
 			children = (
 				E4196A2C23D3E21000E9D471 /* Dominion */,
 				E4196A3723D3E21000E9D471 /* DominionTests */,
+				E4BD7ABE23DA401300D883D8 /* DominionAppTest */,
 				E4196A2B23D3E21000E9D471 /* Products */,
+				E4BD7ADF23DA41E500D883D8 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -128,6 +191,7 @@
 			children = (
 				E4196A2A23D3E21000E9D471 /* Dominion.framework */,
 				E4196A3323D3E21000E9D471 /* DominionTests.xctest */,
+				E4BD7ABD23DA401300D883D8 /* DominionAppTest.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -160,6 +224,7 @@
 				E4196A7923D4CDF200E9D471 /* EmptyTransformer.swift */,
 				E4196A7323D477CC00E9D471 /* FakeHTTPTransport.swift */,
 				E4196A5B23D3E48600E9D471 /* HTTPDataProvider.swift */,
+				E4BD7AF323DA6C4900D883D8 /* HTTPService.swift */,
 				E4196A5F23D4724C00E9D471 /* HTTPTransport.swift */,
 				E4196A5D23D3E4D500E9D471 /* Resource.swift */,
 				E4196A5123D3E3DE00E9D471 /* ResourceConfiguration.swift */,
@@ -182,17 +247,18 @@
 		E4196A7D23D4CFAC00E9D471 /* Tests */ = {
 			isa = PBXGroup;
 			children = (
-				E4196A6D23D475E400E9D471 /* TransformerTests.swift */,
-				E4196A7523D47EE200E9D471 /* FakeTransportResourceTaskTests.swift */,
+				E40AE6E323D911A5009C46DA /* EndToEndTests.swift */,
 				E4196A7723D47EEE00E9D471 /* FakeHTTPTransportTests.swift */,
+				E4196A7523D47EE200E9D471 /* FakeTransportResourceTaskTests.swift */,
 				E4196A6523D4755B00E9D471 /* HTTPDataProviderTests.swift */,
+				E4BD7B2723DCFB2A00D883D8 /* HTTPServiceTests.swift */,
 				E4196A6923D4759100E9D471 /* ResourceObserverTests.swift */,
 				E4196A6723D4757700E9D471 /* ResourceTests.swift */,
 				E4196A6B23D475A900E9D471 /* ThreadSafeTests.swift */,
+				E4196A6D23D475E400E9D471 /* TransformerTests.swift */,
+				E40AE6E123D910F3009C46DA /* URLConvertibleTests.swift */,
 				E4196A6F23D4772800E9D471 /* URLRequestConfigurationTests.swift */,
 				E4196A7123D4775000E9D471 /* URLSessionResourceTaskTests.swift */,
-				E40AE6E123D910F3009C46DA /* URLConvertibleTests.swift */,
-				E40AE6E323D911A5009C46DA /* EndToEndTests.swift */,
 			);
 			path = Tests;
 			sourceTree = "<group>";
@@ -204,6 +270,57 @@
 				E41D729023D4E7AE00422D9F /* FakeHTTPTransport+Injection.swift */,
 			);
 			path = Helper;
+			sourceTree = "<group>";
+		};
+		E4BD7ABE23DA401300D883D8 /* DominionAppTest */ = {
+			isa = PBXGroup;
+			children = (
+				E4BD7AE823DA47D900D883D8 /* Services */,
+				E4BD7AE523DA460C00D883D8 /* Models */,
+				E4BD7ABF23DA401300D883D8 /* AppDelegate.swift */,
+				E4BD7AEF23DA564900D883D8 /* Container.swift */,
+				E4BD7AC123DA401300D883D8 /* SceneDelegate.swift */,
+				E4BD7AC323DA401300D883D8 /* ContentView.swift */,
+				E4BD7AC523DA401600D883D8 /* Assets.xcassets */,
+				E4BD7ACA23DA401600D883D8 /* LaunchScreen.storyboard */,
+				E4BD7ACD23DA401600D883D8 /* Info.plist */,
+				E4BD7AC723DA401600D883D8 /* Preview Content */,
+			);
+			path = DominionAppTest;
+			sourceTree = "<group>";
+		};
+		E4BD7AC723DA401600D883D8 /* Preview Content */ = {
+			isa = PBXGroup;
+			children = (
+				E4BD7AC823DA401600D883D8 /* Preview Assets.xcassets */,
+			);
+			path = "Preview Content";
+			sourceTree = "<group>";
+		};
+		E4BD7ADF23DA41E500D883D8 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		E4BD7AE523DA460C00D883D8 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				E4BD7AE623DA465F00D883D8 /* GitHubRepo.swift */,
+				E4BD7AEB23DA489000D883D8 /* GitHubAPIError.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		E4BD7AE823DA47D900D883D8 /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				E4BD7AE923DA47E300D883D8 /* GitHub.swift */,
+				E4BD7AF123DA668E00D883D8 /* GitHub+API.swift */,
+				E4BD7AED23DA495600D883D8 /* GitHubRouter.swift */,
+			);
+			path = Services;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -256,6 +373,25 @@
 			productReference = E4196A3323D3E21000E9D471 /* DominionTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
+		E4BD7ABC23DA401300D883D8 /* DominionAppTest */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = E4BD7ADD23DA401600D883D8 /* Build configuration list for PBXNativeTarget "DominionAppTest" */;
+			buildPhases = (
+				E4BD7AB923DA401300D883D8 /* Sources */,
+				E4BD7ABA23DA401300D883D8 /* Frameworks */,
+				E4BD7ABB23DA401300D883D8 /* Resources */,
+				E4BD7AE423DA41E500D883D8 /* Embed Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				E4BD7AE323DA41E500D883D8 /* PBXTargetDependency */,
+			);
+			name = DominionAppTest;
+			productName = DominionAppTest;
+			productReference = E4BD7ABD23DA401300D883D8 /* DominionAppTest.app */;
+			productType = "com.apple.product-type.application";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -274,6 +410,9 @@
 						CreatedOnToolsVersion = 11.2.1;
 						LastSwiftMigration = 1120;
 					};
+					E4BD7ABC23DA401300D883D8 = {
+						CreatedOnToolsVersion = 11.2.1;
+					};
 				};
 			};
 			buildConfigurationList = E4196A2423D3E21000E9D471 /* Build configuration list for PBXProject "Dominion" */;
@@ -291,6 +430,7 @@
 			targets = (
 				E4196A2923D3E21000E9D471 /* Dominion */,
 				E4196A3223D3E21000E9D471 /* DominionTests */,
+				E4BD7ABC23DA401300D883D8 /* DominionAppTest */,
 			);
 		};
 /* End PBXProject section */
@@ -307,6 +447,16 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		E4BD7ABB23DA401300D883D8 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E4BD7ACC23DA401600D883D8 /* LaunchScreen.storyboard in Resources */,
+				E4BD7AC923DA401600D883D8 /* Preview Assets.xcassets in Resources */,
+				E4BD7AC623DA401600D883D8 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -329,6 +479,7 @@
 				E4196A4823D3E2F400E9D471 /* Dictionary+Merge.swift in Sources */,
 				E4196A6423D473B300E9D471 /* URLSession+HTTPTransport.swift in Sources */,
 				E4196A4E23D3E3B000E9D471 /* ResourceResponse.swift in Sources */,
+				E4BD7AF423DA6C4900D883D8 /* HTTPService.swift in Sources */,
 				E4196A4A23D3E30A00E9D471 /* ResourceObserver.swift in Sources */,
 				E4196A5023D3E3CA00E9D471 /* ResourceProvider.swift in Sources */,
 				E4196A7A23D4CDF200E9D471 /* EmptyTransformer.swift in Sources */,
@@ -353,10 +504,27 @@
 				E4196A6C23D475A900E9D471 /* ThreadSafeTests.swift in Sources */,
 				E40AE6E223D910F3009C46DA /* URLConvertibleTests.swift in Sources */,
 				E40AE6E423D911A5009C46DA /* EndToEndTests.swift in Sources */,
+				E4BD7B2823DCFB2A00D883D8 /* HTTPServiceTests.swift in Sources */,
 				E4196A7023D4772800E9D471 /* URLRequestConfigurationTests.swift in Sources */,
 				E4196A7223D4775000E9D471 /* URLSessionResourceTaskTests.swift in Sources */,
 				E4196A6823D4757700E9D471 /* ResourceTests.swift in Sources */,
 				E41D729123D4E7AE00422D9F /* FakeHTTPTransport+Injection.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		E4BD7AB923DA401300D883D8 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E4BD7AEA23DA47E300D883D8 /* GitHub.swift in Sources */,
+				E4BD7AEC23DA489000D883D8 /* GitHubAPIError.swift in Sources */,
+				E4BD7AC023DA401300D883D8 /* AppDelegate.swift in Sources */,
+				E4BD7AC223DA401300D883D8 /* SceneDelegate.swift in Sources */,
+				E4BD7AC423DA401300D883D8 /* ContentView.swift in Sources */,
+				E4BD7AF023DA564900D883D8 /* Container.swift in Sources */,
+				E4BD7AEE23DA495600D883D8 /* GitHubRouter.swift in Sources */,
+				E4BD7AE723DA465F00D883D8 /* GitHubRepo.swift in Sources */,
+				E4BD7AF223DA668F00D883D8 /* GitHub+API.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -368,7 +536,23 @@
 			target = E4196A2923D3E21000E9D471 /* Dominion */;
 			targetProxy = E4196A3523D3E21000E9D471 /* PBXContainerItemProxy */;
 		};
+		E4BD7AE323DA41E500D883D8 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = E4196A2923D3E21000E9D471 /* Dominion */;
+			targetProxy = E4BD7AE223DA41E500D883D8 /* PBXContainerItemProxy */;
+		};
 /* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		E4BD7ACA23DA401600D883D8 /* LaunchScreen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				E4BD7ACB23DA401600D883D8 /* Base */,
+			);
+			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
 		E4196A3C23D3E21000E9D471 /* Debug */ = {
@@ -579,6 +763,46 @@
 			};
 			name = Release;
 		};
+		E4BD7AD923DA401600D883D8 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_ASSET_PATHS = "\"DominionAppTest/Preview Content\"";
+				ENABLE_PREVIEWS = YES;
+				INFOPLIST_FILE = DominionAppTest/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.2;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = it.gtrabucco.DominionAppTest;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		E4BD7ADA23DA401600D883D8 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_ASSET_PATHS = "\"DominionAppTest/Preview Content\"";
+				ENABLE_PREVIEWS = YES;
+				INFOPLIST_FILE = DominionAppTest/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.2;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = it.gtrabucco.DominionAppTest;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -605,6 +829,15 @@
 			buildConfigurations = (
 				E4196A4223D3E21000E9D471 /* Debug */,
 				E4196A4323D3E21000E9D471 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		E4BD7ADD23DA401600D883D8 /* Build configuration list for PBXNativeTarget "DominionAppTest" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				E4BD7AD923DA401600D883D8 /* Debug */,
+				E4BD7ADA23DA401600D883D8 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
