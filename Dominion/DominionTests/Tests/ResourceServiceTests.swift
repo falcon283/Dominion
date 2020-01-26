@@ -1,5 +1,5 @@
 //
-//  HTTPServiceTests.swift
+//  ResourceServiceTests.swift
 //  DominionTests
 //
 //  Created by Gabriele Trabucco on 25/01/2020.
@@ -9,10 +9,10 @@
 import XCTest
 import Dominion
 
-class HTTPServiceTests: XCTestCase {
+class ResourceServiceTests: XCTestCase {
     
     let provider = HTTPDataProvider(with: FakeHTTPTransport(latency: .milliseconds(70), latencyVariance: .milliseconds(10)))
-    lazy var service = HTTPService(provider: provider)
+    lazy var service = ResourceService(provider: provider)
     
     func testResourceCachingRetrieval() {
         

@@ -1,5 +1,5 @@
 //
-//  HTTPService.swift
+//  ResourceService.swift
 //  Dominion
 //
 //  Created by Gabriele Trabucco on 24/01/2020.
@@ -8,7 +8,7 @@
 
 import Foundation
 
-open class HTTPService<P: ResourceProvider> {
+open class ResourceService<P: ResourceProvider> {
     
     private let provider: P
     private let safe = platformSafe
@@ -19,16 +19,21 @@ open class HTTPService<P: ResourceProvider> {
     }
     
     public func getResource<C: ResourceConfiguration>(for configuration: C) -> Resource<C, P> {
-        let id = configuration.identifier
-        return (resources[id] as? Resource<C, P>) ?? createResource(with: id, using: configuration)
+        if let id = configuration.cacheIdentifier {
+            return (resources[id] as? Resource<C, P>) ?? createResource(with: id, using: configuration)
+        } else {
+            return createResource(with: nil, using: configuration)
+        }
     }
     
-    private func createResource<C: ResourceConfiguration>(with identifier: String,
+    private func createResource<C: ResourceConfiguration>(with identifier: String?,
                                                           using configuration: C) -> Resource<C, P> {
         
         let resource = Resource(with: configuration, using: provider)
-        safe.execute {
-            resources[identifier] = resource
+        if let id = identifier {
+            safe.execute {
+                resources[id] = resource
+            }
         }
         return resource
     }

@@ -9,8 +9,11 @@
 import Foundation
 
 // MARK: - Repo
+
+extension GitHubRepo: Identifiable { }
+
 struct GitHubRepo: Codable {
-    let id: Int?
+    let id: Int
     let nodeId, name, fullName: String?
     let repoPrivate: Bool?
     let owner: Owner?

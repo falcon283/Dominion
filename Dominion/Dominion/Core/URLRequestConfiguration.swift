@@ -33,7 +33,7 @@ public struct URLRequestConfiguration<O, E: Error>: ResourceConfiguration {
     public typealias Downstream = O
     
     public let expiration: ResourceExpiration
-    public let identifier: String
+    public let cacheIdentifier: String?
     
     private let backingRequest: () -> Request
     
@@ -41,14 +41,14 @@ public struct URLRequestConfiguration<O, E: Error>: ResourceConfiguration {
     private let error: (Data?) throws -> E
     
     public init<TD: Transformer, TE: Transformer>(
-        identifier: String,
+        cacheIdentifier: String?,
         expiration: ResourceExpiration = .never,
         downstream: TD,
         error: TE,
         with request: @escaping () -> Request)
         where TD.I == Data, TD.O == O, TE.I == Data, TE.O == E {
             
-            self.identifier = identifier
+            self.cacheIdentifier = cacheIdentifier
             self.backingRequest = request
             self.expiration = expiration
             self.downstream = downstream.getTransformed
@@ -67,12 +67,9 @@ public struct URLRequestConfiguration<O, E: Error>: ResourceConfiguration {
         error: TE)
         where TU.O == Data, TD.I == Data, TD.O == O, TE.I == Data, TE.O == E {
             
-            let identifier = [route.asUrl.host ?? "emptyHost",
-                              route.asUrl.path,
-                              method.rawValue]
-                .joined(separator: "-")
+            let id = Self.getResourceIdentifier(for: route.asUrl, method: method)
             
-            self.init(identifier: identifier, expiration: expiration, downstream: downstream, error: error) {
+            self.init(cacheIdentifier: id, expiration: expiration, downstream: downstream, error: error) {
                 var request = URLRequest(url: route.asUrl, cachePolicy: cachePolicy, timeoutInterval: timeout)
                 request.httpMethod = method.rawValue
                 request.allHTTPHeaderFields = headers
@@ -97,7 +94,7 @@ public struct URLRequestConfiguration<O, E: Error>: ResourceConfiguration {
     
     public func withCachePolicy(_ policy: URLRequest.CachePolicy) -> Self {
         Self.init(
-            identifier: identifier,
+            cacheIdentifier: cacheIdentifier,
             expiration: expiration,
             downstream: BlockTransformer(tranform: downstream),
             error: BlockTransformer(tranform: error)) {
@@ -110,6 +107,13 @@ public struct URLRequestConfiguration<O, E: Error>: ResourceConfiguration {
     
     public func aggressiveConfiguration() -> URLRequestConfiguration<O, E> {
         withCachePolicy(.reloadIgnoringLocalCacheData)
+    }
+}
+
+extension URLRequestConfiguration {
+    
+    static func getResourceIdentifier(for url: URL, method: HTTPMethod) -> String? {
+        method == .get ? [method.rawValue, url.absoluteString].joined(separator: "|") : nil
     }
 }
 

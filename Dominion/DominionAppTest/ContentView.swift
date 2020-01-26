@@ -7,21 +7,68 @@
 //
 
 import SwiftUI
+import Combine
+import Dominion
 
-var tokens = [CancellationToken]()
+extension View {
+    var asAnyView: AnyView {
+        AnyView(self)
+    }
+}
+
+class ReposViewModel: ObservableObject {
+    
+    var objectWillChange = ObservableObjectPublisher()
+    
+    @Published
+    var searchText: String = ""
+    
+    private var token: Cancellable?
+    
+    var repos: [GitHubRepo] = [] {
+        willSet {
+            objectWillChange.send()
+        }
+    }
+    
+    init() {
+        token = $searchText
+            .filter { $0.count > 2 }
+            .debounce(for: 0.5, scheduler: DispatchQueue.main, options: nil)
+            .map { Container.gitHub.repos(for: $0).publisher.replaceError(with: .value([])) }
+            .switchToLatest()
+            .eraseToAnyPublisher()
+            .print()
+            .sink { [weak self] in self?.repos = $0.value ?? [] }
+    }
+}
 
 struct ContentView: View {
     
+    @ObservedObject
+    var viewModel = ReposViewModel()
+        
+    @State
+    var searchText: String = ""
+    
     var body: some View {
         
-        Button(action: {
-            Container.gitHub.repos(for: "falcon283")
-                .observe { print($0) }
-                .store(in: &tokens)
-            
-        }, label: {
-            Text("Hello World!")
-        })
+        VStack {
+            TextField("Handle Name", text: $viewModel.searchText)
+                .textFieldStyle(RoundedBorderTextFieldStyle())
+                .padding(EdgeInsets(top: 8, leading: 16, bottom: 8, trailing: 16))
+            if viewModel.repos.isEmpty {
+                VStack {
+                    Spacer()
+                    Text("No Repository")
+                    Spacer()
+                }
+            } else {
+                List(viewModel.repos) {
+                    Text($0.name ?? "NoName")
+                }
+            }
+        }
     }
 }
 

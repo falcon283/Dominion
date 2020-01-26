@@ -18,7 +18,7 @@ public protocol ResourceConfiguration {
     associatedtype Request
     associatedtype Downstream
     
-    var identifier: String { get }
+    var cacheIdentifier: String? { get }
     var expiration: ResourceExpiration { get }
     func aggressiveConfiguration() -> Self
     
