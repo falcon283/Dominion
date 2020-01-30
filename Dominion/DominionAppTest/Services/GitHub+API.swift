@@ -14,5 +14,7 @@ extension GitHub {
         getResource(for: GitHubResourceConfiguration(route: GitHubRouter.myRepos(username: username),
                                                      expiration: .interval(60),
                                                      downstream: .init(decoder: Self.decoder)))
+        .withGitHubAuthRevovery()
     }
+    
 }

@@ -14,7 +14,7 @@ import Foundation
 open class ResourceService<P: ResourceProvider> {
     
     private let provider: P
-    private let safe = platformSafe
+    private let safe = threadSafe()
     private var resources: [String: Any] = [:]
     
     /// Designated initializer

@@ -12,6 +12,7 @@ import Dominion
 enum GitHubRouter {
     
     case myRepos(username: String)
+    case authorizationRefresh
 }
 
 extension GitHubRouter: URLConvertible {
@@ -31,6 +32,10 @@ extension GitHubRouter: URLConvertible {
         case .myRepos(username: let name):
             var c = Self.components
             c.path = "/users/\(name)/repos"
+            return c.url
+        case.authorizationRefresh
+            var c = Self.components
+            c.path = "/refreshToken"
             return c.url
         }
     }

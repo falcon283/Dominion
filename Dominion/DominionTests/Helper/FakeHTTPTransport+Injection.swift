@@ -14,7 +14,7 @@ extension FakeHTTPTransport {
     func inject<O, E: Error>(_ configuration: URLRequestConfiguration<O, E>, data: Data?, statusCode: Int) {
         let isValid = 200..<300 ~= statusCode
         addFakeResponse((data,
-                         HTTPURLResponse(url: Routes.user.asUrl!,
+                         HTTPURLResponse(url: try! configuration.request().url!,
                                          statusCode: statusCode,
                                          httpVersion: nil,
                                          headerFields: nil),

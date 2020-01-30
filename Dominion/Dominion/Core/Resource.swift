@@ -25,7 +25,7 @@ public class Resource<C: ResourceConfiguration, P: ResourceProvider> where C.Req
         case error(Error)
     }
     
-    private let safe = platformSafe
+    let safe = recursiveThreadSafe()
     private var observers: [ResourceObserver<Response<C.Downstream>>] = []
     private let provider: P
     private let configuration: C
@@ -98,7 +98,7 @@ public class Resource<C: ResourceConfiguration, P: ResourceProvider> where C.Req
         }
     }
         
-    private func perform(with observer: ResourceObserver<Response<C.Downstream>>) {
+    fileprivate func perform(with observer: ResourceObserver<Response<C.Downstream>>) {
         
         // If running let the task complete and all the observers will be notified.
         guard isRunning == false else { return }
@@ -131,11 +131,8 @@ public class Resource<C: ResourceConfiguration, P: ResourceProvider> where C.Req
             let task = try provider.perform(using: configuration) { [weak self] result in
                 self?.safe.execute {
                     self?.updateState(with: result)
-                    
-                    self?.observers.forEach { $0.emit(result) }
-                    // In this place because to avoid endless loop starting a refresh
-                    // or another addObserver from the observer emission.
                     self?.task = nil
+                    self?.observers.forEach { $0.emit(result) }
                 }
             }
             self.task = task
@@ -171,56 +168,71 @@ public class Resource<C: ResourceConfiguration, P: ResourceProvider> where C.Req
     }
 }
 
-import Combine
-
-@available(iOS 13.0, *)
-public class CombineResource<T>: ObservableObject {
-    
-    private var token: CancellationToken?
-
-    public var objectWillChange = ObservableObjectPublisher()
-    public private(set) var response: Response<T>? {
-        willSet {
-            guard newValue != nil else { return }
-            self.error = nil
-        }
-    }
-    
-    public private(set) var error: Error? {
-        willSet {
-            objectWillChange.send()
-        }
-    }
-    
-    fileprivate init<C: ResourceConfiguration, P: ResourceProvider>(_ resource: Resource<C, P>)
-        where C.Request == P.Request, C.Downstream == T {
-            
-            self.token = resource.observe(with: { [weak self] in
-                switch $0 {
-                case .success(let response):
-                    self?.response = response
-                case .failure(let error):
-                    self?.error = error
-                }
-            })
-    }
-}
-
-@available(iOS 13.0, *)
 public extension Resource {
     
-    var publisher: AnyPublisher<Response<C.Downstream>, Error> {
-        let publisher = PassthroughSubject<Response<C.Downstream>, Error>()
-        let token = self.observe {
-            switch $0 {
-            case .success(let response):
-                publisher.send(response)
-            case .failure(let error):
-                publisher.send(completion: .failure(error))
-            }
-        }
-        return AnyPublisher(publisher.handleEvents(receiveCompletion: { _ in _ = token }))
+    private static func retry(_ maxAttempts: Int, retryFunction: RetryTimeFunction) -> RetryClosure {
+        retry(maxAttempts, timeFunction: retryFunction.timeFunction)
     }
     
-    var combineResource: CombineResource<C.Downstream> { CombineResource(self) }
+    /// Utility to create a RetryClosure with a custom Retry Closure
+    /// - Parameters:
+    ///   - maxAttempts: The max attempts to retry
+    ///   - timeFunction: The time function to perform the retry after a certain amount of time.
+    /// - Returns: The RetryClosure with the given custom time function.
+    static func retry(_ maxAttempts: Int, timeFunction: @escaping RetryTime) -> RetryClosure {
+        return { attempt, refresh in
+            guard attempt < maxAttempts else { return nil }
+            let queue = DispatchQueue(label: "it.gtrabucco.dominion.resource.retry.queue")
+            let delay = timeFunction(attempt)
+            let workItem = DispatchWorkItem(block: refresh)
+            queue.asyncAfter(wallDeadline: .now() + .milliseconds(Int(delay) * 1000), execute: workItem)
+            return DeinitCancellationToken { workItem.cancel() }
+        }
+    }
+    
+    /// Utility to make a Resource able to recover with custom rules using a different Resource.
+    /// - Parameters:
+    ///   - resource: The resource to use for the recovery process. (e.g authentication token recovery)
+    ///   - shouldRecovery: A closure to filter certain types of errors. Default always true.
+    ///   - recovery: The closure to run when the recovery rosource succeed. You are responsible to use the response to update your app state and
+    ///   make your original resource retry to succeede
+    /// - Returns: The wrapped resource able to recover
+    func recover<R, CW>(using resource: R,
+                        shouldRecovery: @escaping (Result<Response<C.Downstream>, Error>) -> Bool = { _ in true },
+                        recovery: @escaping (Response<CW.Downstream>) -> Void) -> Resource<C, P>
+        where CW: ResourceConfiguration, R: Resource<CW, P> {
+        
+        RecoveryResource(with: configuration,
+                         using: provider,
+                         recoveryResource: resource,
+                         shouldRecovery: shouldRecovery,
+                         recovery: recovery)
+    }
+    
+    /// Utility to make a Resource able to retry with custom rules using a custom RetryClosure.
+    /// - Parameters:
+    ///   - shouldRetry: A closure to filter certain types of errors. Default always true.
+    ///   - retry: The custom RetryClosure to offset subsequents retry attempts.
+    /// - Returns: The wrapped resource able to retry
+    func retryOnError(if shouldRetry: @escaping (Result<Response<C.Downstream>, Error>) -> Bool = { _ in true },
+                      with retry: @escaping RetryClosure) -> Resource<C, P> {
+        
+            RetryResource(with: configuration,
+                          using: provider,
+                          shouldRetry: shouldRetry,
+                          retry: retry)
+    }
+    
+    /// Utility to make a Resource able to retry using max attemps and a built in RetryFunction.
+    /// - Parameters:
+    ///   - attempts: The max attemps to retry.
+    ///   - retryFunction: The time function to use to offset subsequents retry attempts
+    ///   - shouldRetry: A closure to filter certain types of errors. Default always true.
+    /// - Returns: The wrapped resource able to retry
+    func retryOnError(_ attempts: Int,
+                      in retryFunction: RetryTimeFunction,
+                      if shouldRetry: @escaping (Result<Response<C.Downstream>, Error>) -> Bool = { _ in true }) -> Resource<C, P> {
+        
+        retryOnError(if: shouldRetry, with: Resource.retry(attempts, retryFunction: retryFunction))
+    }
 }

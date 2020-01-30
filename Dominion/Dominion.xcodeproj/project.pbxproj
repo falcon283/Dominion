@@ -42,6 +42,13 @@
 		E4196A8023D4D03100E9D471 /* TestsType.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4196A7F23D4D03100E9D471 /* TestsType.swift */; };
 		E41D729123D4E7AE00422D9F /* FakeHTTPTransport+Injection.swift in Sources */ = {isa = PBXBuildFile; fileRef = E41D729023D4E7AE00422D9F /* FakeHTTPTransport+Injection.swift */; };
 		E41D729323D50EF900422D9F /* URLRequestConfiguration+Codable.swift in Sources */ = {isa = PBXBuildFile; fileRef = E41D729223D50EF900422D9F /* URLRequestConfiguration+Codable.swift */; };
+		E4625C6D23FF77D0006D595A /* RecoveryResource.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4625C6C23FF77D0006D595A /* RecoveryResource.swift */; };
+		E4625C6F23FF7885006D595A /* Retry.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4625C6E23FF7885006D595A /* Retry.swift */; };
+		E4625C8C240093AD006D595A /* RetryResource.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4625C8B240093AD006D595A /* RetryResource.swift */; };
+		E4625C8E24021B8D006D595A /* Resource+Combine.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4625C8D24021B8D006D595A /* Resource+Combine.swift */; };
+		E4625C902402C547006D595A /* RecoveryResourceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4625C8F2402C547006D595A /* RecoveryResourceTests.swift */; };
+		E4625C922402C92E006D595A /* RetryResourceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4625C912402C92E006D595A /* RetryResourceTests.swift */; };
+		E4625C942402DEDC006D595A /* RetryTimeFunctionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4625C932402DEDC006D595A /* RetryTimeFunctionTests.swift */; };
 		E48588AF23E39A59009509B0 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = E48588AE23E39A59009509B0 /* README.md */; };
 		E48588B123E39A89009509B0 /* LICENSE.md in Resources */ = {isa = PBXBuildFile; fileRef = E48588B023E39A89009509B0 /* LICENSE.md */; };
 		E4BD7AC023DA401300D883D8 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4BD7ABF23DA401300D883D8 /* AppDelegate.swift */; };
@@ -132,6 +139,13 @@
 		E4196A7F23D4D03100E9D471 /* TestsType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestsType.swift; sourceTree = "<group>"; };
 		E41D729023D4E7AE00422D9F /* FakeHTTPTransport+Injection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FakeHTTPTransport+Injection.swift"; sourceTree = "<group>"; };
 		E41D729223D50EF900422D9F /* URLRequestConfiguration+Codable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "URLRequestConfiguration+Codable.swift"; sourceTree = "<group>"; };
+		E4625C6C23FF77D0006D595A /* RecoveryResource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecoveryResource.swift; sourceTree = "<group>"; };
+		E4625C6E23FF7885006D595A /* Retry.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Retry.swift; sourceTree = "<group>"; };
+		E4625C8B240093AD006D595A /* RetryResource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RetryResource.swift; sourceTree = "<group>"; };
+		E4625C8D24021B8D006D595A /* Resource+Combine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Resource+Combine.swift"; sourceTree = "<group>"; };
+		E4625C8F2402C547006D595A /* RecoveryResourceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecoveryResourceTests.swift; sourceTree = "<group>"; };
+		E4625C912402C92E006D595A /* RetryResourceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RetryResourceTests.swift; sourceTree = "<group>"; };
+		E4625C932402DEDC006D595A /* RetryTimeFunctionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RetryTimeFunctionTests.swift; sourceTree = "<group>"; };
 		E48588AE23E39A59009509B0 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; name = README.md; path = ../../README.md; sourceTree = "<group>"; };
 		E48588B023E39A89009509B0 /* LICENSE.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; name = LICENSE.md; path = ../../LICENSE.md; sourceTree = "<group>"; };
 		E48588B423E39F46009509B0 /* Dominion-logo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Dominion-logo.png"; path = "../../Dominion-logo.png"; sourceTree = "<group>"; };
@@ -234,6 +248,10 @@
 				E4196A5B23D3E48600E9D471 /* HTTPDataProvider.swift */,
 				E4196A5F23D4724C00E9D471 /* HTTPTransport.swift */,
 				E4196A5D23D3E4D500E9D471 /* Resource.swift */,
+				E4625C8D24021B8D006D595A /* Resource+Combine.swift */,
+				E4625C6C23FF77D0006D595A /* RecoveryResource.swift */,
+				E4625C8B240093AD006D595A /* RetryResource.swift */,
+				E4625C6E23FF7885006D595A /* Retry.swift */,
 				E4196A5123D3E3DE00E9D471 /* ResourceConfiguration.swift */,
 				E4196A4923D3E30A00E9D471 /* ResourceObserver.swift */,
 				E4196A4F23D3E3CA00E9D471 /* ResourceProvider.swift */,
@@ -262,6 +280,9 @@
 				E4BD7B2723DCFB2A00D883D8 /* ResourceServiceTests.swift */,
 				E4196A6923D4759100E9D471 /* ResourceObserverTests.swift */,
 				E4196A6723D4757700E9D471 /* ResourceTests.swift */,
+				E4625C8F2402C547006D595A /* RecoveryResourceTests.swift */,
+				E4625C912402C92E006D595A /* RetryResourceTests.swift */,
+				E4625C932402DEDC006D595A /* RetryTimeFunctionTests.swift */,
 				E4196A6B23D475A900E9D471 /* ThreadSafeTests.swift */,
 				E4196A6D23D475E400E9D471 /* TransformerTests.swift */,
 				E40AE6E123D910F3009C46DA /* URLConvertibleTests.swift */,
@@ -481,6 +502,7 @@
 				E4196A6023D4724C00E9D471 /* HTTPTransport.swift in Sources */,
 				E4196A5623D3E40D00E9D471 /* Transformer+Codable.swift in Sources */,
 				E4196A6223D4738E00E9D471 /* URLSessionResourceTask.swift in Sources */,
+				E4625C6D23FF77D0006D595A /* RecoveryResource.swift in Sources */,
 				E4196A4C23D3E37900E9D471 /* ResourceTask.swift in Sources */,
 				E4196A7423D477CC00E9D471 /* FakeHTTPTransport.swift in Sources */,
 				E4196A5A23D3E43E00E9D471 /* URLConvertible.swift in Sources */,
@@ -488,13 +510,16 @@
 				E4196A5823D3E42300E9D471 /* URLRequestConfiguration.swift in Sources */,
 				E4196A4823D3E2F400E9D471 /* Dictionary+Merge.swift in Sources */,
 				E4196A6423D473B300E9D471 /* URLSession+HTTPTransport.swift in Sources */,
+				E4625C8C240093AD006D595A /* RetryResource.swift in Sources */,
 				E4196A4E23D3E3B000E9D471 /* ResourceResponse.swift in Sources */,
 				E4BD7AF423DA6C4900D883D8 /* ResourceService.swift in Sources */,
 				E4196A4A23D3E30A00E9D471 /* ResourceObserver.swift in Sources */,
+				E4625C6F23FF7885006D595A /* Retry.swift in Sources */,
 				E4196A5023D3E3CA00E9D471 /* ResourceProvider.swift in Sources */,
 				E4196A7A23D4CDF200E9D471 /* EmptyTransformer.swift in Sources */,
 				E4196A5223D3E3DE00E9D471 /* ResourceConfiguration.swift in Sources */,
 				E4196A5C23D3E48600E9D471 /* HTTPDataProvider.swift in Sources */,
+				E4625C8E24021B8D006D595A /* Resource+Combine.swift in Sources */,
 				E4196A7C23D4CE1C00E9D471 /* BlockTransformer.swift in Sources */,
 				E4196A4623D3E22D00E9D471 /* ThreadSafe.swift in Sources */,
 				E4196A5423D3E3F900E9D471 /* Transformer.swift in Sources */,
@@ -509,7 +534,9 @@
 				E4196A6E23D475E400E9D471 /* TransformerTests.swift in Sources */,
 				E4196A7623D47EE200E9D471 /* FakeTransportResourceTaskTests.swift in Sources */,
 				E4196A7823D47EEE00E9D471 /* FakeHTTPTransportTests.swift in Sources */,
+				E4625C922402C92E006D595A /* RetryResourceTests.swift in Sources */,
 				E4196A6623D4755B00E9D471 /* HTTPDataProviderTests.swift in Sources */,
+				E4625C942402DEDC006D595A /* RetryTimeFunctionTests.swift in Sources */,
 				E4196A8023D4D03100E9D471 /* TestsType.swift in Sources */,
 				E4196A6C23D475A900E9D471 /* ThreadSafeTests.swift in Sources */,
 				E40AE6E223D910F3009C46DA /* URLConvertibleTests.swift in Sources */,
@@ -519,6 +546,7 @@
 				E4196A7223D4775000E9D471 /* URLSessionResourceTaskTests.swift in Sources */,
 				E4196A6823D4757700E9D471 /* ResourceTests.swift in Sources */,
 				E41D729123D4E7AE00422D9F /* FakeHTTPTransport+Injection.swift in Sources */,
+				E4625C902402C547006D595A /* RecoveryResourceTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

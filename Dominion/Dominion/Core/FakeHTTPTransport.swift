@@ -23,7 +23,7 @@ enum FakeHTTPTransportError: Error {
 /// A Fake HTTPTransport suitable for Unit Testing.
 public class FakeHTTPTransport: HTTPTransport {
     
-    private let safe: ThreadSafety = platformSafe
+    private let safe = threadSafe()
     
     private var responses: [Int: HTTPTransportResponse] = [:]
     var interceptor: ((Data?, FakeURLResponse?, Error?) -> Void)?

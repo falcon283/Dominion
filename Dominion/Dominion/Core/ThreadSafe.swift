@@ -21,6 +21,8 @@ public final class ThreadSafe: ThreadSafety {
     
     private var lock = os_unfair_lock_s()
     
+    public init() { }
+    
     public func execute(_ block: () -> Void) {
         if !os_unfair_lock_trylock(&lock) {
             os_unfair_lock_lock(&lock)
@@ -30,10 +32,11 @@ public final class ThreadSafe: ThreadSafety {
     }
 }
 
-/// A legacy ThreadSafe executor that uses an `NSRecursiveLock` internally to handle the resource exclusive access.
 public final class ThreadSafeLegacy: ThreadSafety {
     
-    private var lock = NSRecursiveLock()
+    private var lock = NSLock()
+    
+    public init() { }
     
     public func execute(_ block: () -> Void) {
         lock.lock(); defer { lock.unlock() }
@@ -41,11 +44,28 @@ public final class ThreadSafeLegacy: ThreadSafety {
     }
 }
 
-/// A global variable that switch the usage of the ThreadSafety implementation based on the current executing system.
-public var platformSafe: ThreadSafety {
+
+/// A legacy ThreadSafe executor that uses an `NSRecursiveLock` internally to handle the resource exclusive access.
+public final class RecursiveThreadSafe: ThreadSafety {
+    
+    private var lock = NSRecursiveLock()
+    
+    public init() { }
+    
+    public func execute(_ block: () -> Void) {
+        lock.lock(); defer { lock.unlock() }
+        block()
+    }
+}
+    
+public func threadSafe() -> ThreadSafety {
     if #available(iOS 10.0, *) {
         return ThreadSafe()
     } else {
         return ThreadSafeLegacy()
     }
+}
+
+public func recursiveThreadSafe() -> ThreadSafety {
+    RecursiveThreadSafe()
 }

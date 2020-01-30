@@ -21,7 +21,7 @@ public extension CancellationToken {
     /// - Parameters:
     ///   - array: The array to use as storage for the token
     ///   - safe: The ThreadSafe Object to use to avoid memory corruption in multithreading execution.
-    func store(in array: inout [CancellationToken], using safe: ThreadSafety = platformSafe) {
+    func store(in array: inout [CancellationToken], using safe: ThreadSafety = recursiveThreadSafe()) {
         safe.execute {
             array.append(self)
         }
@@ -46,6 +46,18 @@ public class DeinitCancellationToken: CancellationToken {
 
 /// No Operation cancellation token.
 public class NoOpCancellationToken: CancellationToken { }
+
+public class CancellationTokenBag: CancellationToken {
+    
+    private let safe = recursiveThreadSafe()
+    private var tokens: [CancellationToken] = []
+    
+    public func append(_ token: CancellationToken) {
+        safe.execute {
+            tokens.append(token)
+        }
+    }
+}
 
 /// The resource observer is a closure wrapper used to emit the given result. The emission is performed on the Operation Queue of the given thread, if available,
 /// or on the main queue if not. Resource Observer emission is Threadsafe.

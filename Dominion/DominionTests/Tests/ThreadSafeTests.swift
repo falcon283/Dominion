@@ -31,14 +31,17 @@ class ThreadSafeTests: XCTestCase {
             }
             
             wait(for: [e], timeout: 5)
+            
+            XCTAssert(array.count == 1000)
         }
     }
     
     func testThreadSafeLegacy() {
         
         let safe = ThreadSafeLegacy()
-        let e = expectation(description: "Thread Safe Legacy")
-
+        
+        let e = expectation(description: "Thread Safe")
+        
         DispatchQueue.concurrentPerform(iterations: 1000) { iteration in
             safe.execute {
                 array.append(iteration)
@@ -50,5 +53,31 @@ class ThreadSafeTests: XCTestCase {
         }
         
         wait(for: [e], timeout: 5)
+        
+        XCTAssert(array.count == 1000)
+    }
+    
+    func testRecursiveThreadSafe() {
+        
+        let safe = RecursiveThreadSafe()
+        let e = expectation(description: "Recursive Thread Safe")
+
+        DispatchQueue.concurrentPerform(iterations: 1000) { iteration in
+            safe.execute {
+                array.append(iteration)
+                
+                safe.execute {
+                    array.append(iteration)
+                }
+                
+                if array.count == 2 * 1000  {
+                    e.fulfill()
+                }
+            }
+        }
+        
+        wait(for: [e], timeout: 5)
+        
+        XCTAssert(array.count == 2000)
     }
 }
