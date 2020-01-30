@@ -11,6 +11,6 @@ import Foundation
 public protocol ResourceProvider {
     associatedtype Request
     
-    func perform<C>(using configuration: C, result: @escaping (Result<Response<C.Downstream>, Error>) -> Void) -> ResourceTask
+    func perform<C>(using configuration: C, result: @escaping (Result<Response<C.Downstream>, Error>) -> Void) throws -> ResourceTask
         where C: ResourceConfiguration, C.Request == Request
 }

@@ -110,7 +110,8 @@ public extension URLRequestConfiguration where O: Decodable, E: Decodable {
             
             let id = Self.getResourceIdentifier(for: route.asUrl, method: method)
             self.init(cacheIdentifier: id, expiration: expiration, downstream: downstream, error: error) {
-                var request = URLRequest(url: route.asUrl, cachePolicy: cachePolicy, timeoutInterval: timeout)
+                guard let url = route.asUrl else { throw URLConvertibleError.invalidURL(route) }
+                var request = URLRequest(url: url, cachePolicy: cachePolicy, timeoutInterval: timeout)
                 request.httpMethod = method.rawValue
                 request.allHTTPHeaderFields = headers
                 if method != .get {

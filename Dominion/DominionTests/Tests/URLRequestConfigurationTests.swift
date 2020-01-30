@@ -13,7 +13,7 @@ import Dominion
 class URLRequestConfigurationTests: XCTestCase {
     
     private func checkDefaultValues<C: ResourceConfiguration>(for configuration: C) where C.Request == URLRequest {
-        let request = configuration.request
+        let request = try! configuration.request()
         
         XCTAssert(request.httpMethod == "GET", "Default httpMethod must be GET")
         XCTAssert(request.allHTTPHeaderFields?.isEmpty == true, "Default headers must be empty")
@@ -28,9 +28,24 @@ class URLRequestConfigurationTests: XCTestCase {
         }
     }
     
+    // 0. Nil Url Exception
+    
+    func testInvalidUrl() {
+        let c = URLRequestConfiguration(route: Routes.wrongUrl)
+
+        XCTAssertThrowsError(try c.request(), "Request should Throw") {
+            switch $0 {
+            case URLConvertibleError.invalidURL(let route):
+                XCTAssert((route as? Routes) == .wrongUrl, "Wrong URL Error is expected")
+            default:
+                XCTFail("invalid URL expected")
+            }
+        }
+    }
+    
     // 1. Expiration
     
-    func textExpiration() {
+    func testExpiration() {
         
         let c1 = URLRequestConfiguration(route: Routes.user)
         
@@ -169,7 +184,7 @@ class URLRequestConfigurationTests: XCTestCase {
         let c = URLRequestConfiguration<User, ApiError>(route: Routes.user,
                                                         upstream: Upstream(with: EncodableTransformer(), using: "text"))
         
-        XCTAssert(c.request.httpBody == nil, "Body must be nil for Get requests")
+        XCTAssert(try! c.request().httpBody == nil, "Body must be nil for Get requests")
     }
     
     func testUpstreamPost() {
@@ -178,7 +193,7 @@ class URLRequestConfigurationTests: XCTestCase {
                                                         method: .post,
                                                         upstream: Upstream(with: EncodableTransformer(), using: "text"))
         
-        let request = c.request
+        let request = try! c.request()
         
         if let data = request.httpBody {
             let text = try? JSONDecoder().decode(String.self, from: data)
@@ -194,7 +209,7 @@ class URLRequestConfigurationTests: XCTestCase {
                                                      method: .post,
                                                      body: "text")
         
-        let request = c.request
+        let request = try! c.request()
         
         if let data = request.httpBody {
             let text = try? JSONDecoder().decode(String.self, from: data)
@@ -210,7 +225,7 @@ class URLRequestConfigurationTests: XCTestCase {
                                                         method: .post,
                                                         body: "text")
         
-        let request = c.request
+        let request = try! c.request()
         
         if let data = request.httpBody {
             let text = try? JSONDecoder().decode(String.self, from: data)
@@ -226,7 +241,7 @@ class URLRequestConfigurationTests: XCTestCase {
         
         let c = URLRequestConfiguration<User, ApiError>(route: Routes.user).aggressiveConfiguration()
         
-        let request = c.request
+        let request = try! c.request()
         
         XCTAssert(request.cachePolicy == .reloadIgnoringLocalCacheData, "Default cachePolicy must be reloadIgnoringLocalCacheData")
     }

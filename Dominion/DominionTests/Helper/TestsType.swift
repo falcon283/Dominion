@@ -11,13 +11,16 @@ import Dominion
 
 enum Routes {
     case user
+    case wrongUrl
 }
 
 extension Routes: URLConvertible {
-    var asUrl: URL {
+    var asUrl: URL? {
         switch self {
         case .user:
-            return URL(string: "https://api.myjson.com/bins/vlg10")!
+            return URL(string: "https://api.myjson.com/bins/vlg10")
+        case .wrongUrl:
+            return nil
         }
     }
 }

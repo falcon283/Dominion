@@ -22,7 +22,7 @@ public protocol ResourceConfiguration {
     var expiration: ResourceExpiration { get }
     func aggressiveConfiguration() -> Self
     
-    var request: Request { get }
+    func request() throws -> Request
     
     func transform(_ result: Data?) throws -> Downstream
     func transformError(_ result: Data?) throws -> Error

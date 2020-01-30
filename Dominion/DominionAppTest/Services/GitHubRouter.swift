@@ -26,12 +26,12 @@ extension GitHubRouter: URLConvertible {
         return components
     }()
     
-    var asUrl: URL {
+    var asUrl: URL? {
         switch self {
         case .myRepos(username: let name):
             var c = Self.components
             c.path = "/users/\(name)/repos"
-            return c.url!
+            return c.url
         }
     }
 }

@@ -35,7 +35,7 @@ public struct URLRequestConfiguration<O, E: Error>: ResourceConfiguration {
     public let expiration: ResourceExpiration
     public let cacheIdentifier: String?
     
-    private let backingRequest: () -> Request
+    private let backingRequest: () throws -> Request
     
     private let downstream: (Data?) throws -> O
     private let error: (Data?) throws -> E
@@ -45,7 +45,7 @@ public struct URLRequestConfiguration<O, E: Error>: ResourceConfiguration {
         expiration: ResourceExpiration = .never,
         downstream: TD,
         error: TE,
-        with request: @escaping () -> Request)
+        with request: @escaping () throws -> Request)
         where TD.I == Data, TD.O == O, TE.I == Data, TE.O == E {
             
             self.cacheIdentifier = cacheIdentifier
@@ -70,7 +70,8 @@ public struct URLRequestConfiguration<O, E: Error>: ResourceConfiguration {
             let id = Self.getResourceIdentifier(for: route.asUrl, method: method)
             
             self.init(cacheIdentifier: id, expiration: expiration, downstream: downstream, error: error) {
-                var request = URLRequest(url: route.asUrl, cachePolicy: cachePolicy, timeoutInterval: timeout)
+                guard let url = route.asUrl else { throw URLConvertibleError.invalidURL(route) }
+                var request = URLRequest(url: url, cachePolicy: cachePolicy, timeoutInterval: timeout)
                 request.httpMethod = method.rawValue
                 request.allHTTPHeaderFields = headers
                 if method != .get {
@@ -80,10 +81,10 @@ public struct URLRequestConfiguration<O, E: Error>: ResourceConfiguration {
             }
     }
     
-    public var request: Request {
-        return backingRequest()
+    public func request() throws -> URLRequest {
+        try backingRequest()
     }
-    
+        
     public func transform(_ result: Data?) throws -> O {
         try downstream(result)
     }
@@ -99,7 +100,7 @@ public struct URLRequestConfiguration<O, E: Error>: ResourceConfiguration {
             downstream: BlockTransformer(tranform: downstream),
             error: BlockTransformer(tranform: error)) {
                 
-                var request = self.backingRequest()
+                var request = try self.backingRequest()
                 request.cachePolicy = policy
                 return request
         }
@@ -112,8 +113,8 @@ public struct URLRequestConfiguration<O, E: Error>: ResourceConfiguration {
 
 extension URLRequestConfiguration {
     
-    static func getResourceIdentifier(for url: URL, method: HTTPMethod) -> String? {
-        method == .get ? [method.rawValue, url.absoluteString].joined(separator: "|") : nil
+    static func getResourceIdentifier(for url: URL?, method: HTTPMethod) -> String? {
+        method == .get ? url.map { [method.rawValue, $0.absoluteString].joined(separator: "|") } : nil
     }
 }
 

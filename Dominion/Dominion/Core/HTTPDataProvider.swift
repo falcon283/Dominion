@@ -26,17 +26,17 @@ open class HTTPDataProvider: ResourceProvider {
     }
     
     public func perform<C>(using configuration: C,
-                           result: @escaping (Result<Response<C.Downstream>, Error>) -> Void) -> ResourceTask
+                           result: @escaping (Result<Response<C.Downstream>, Error>) -> Void) throws -> ResourceTask
         where C : ResourceConfiguration, Request == C.Request {
             
             let result = Thread.isMainThread ? result : { r in DispatchQueue.main.async { result(r) }}
             
-            var request = configuration.request
+            var request = try configuration.request()
             request.allHTTPHeaderFields = commonHeaders + (request.allHTTPHeaderFields ?? [:])
             return transport.task(with: request) { (data, response, error) in
                 
                 if let response = response as? HTTPURLResponse {
-
+                    
                     if (200..<300) ~= response.statusCode {
                         do {
                             let object = try configuration.transform(data)

@@ -39,7 +39,7 @@ class HTTPDataProviderTests: XCTestCase {
         
         transport.inject(configuration, data: userData, statusCode: 200)
         
-        let task = provider.perform(using: configuration) { _ in }
+        let task = try! provider.perform(using: configuration) { _ in }
         task.resume()
         
         wait(for: [e], timeout: 1)
@@ -54,7 +54,7 @@ class HTTPDataProviderTests: XCTestCase {
         
         transport.inject(configuration, data: userData, statusCode: 200)
         
-        let task = provider.perform(using: configuration) { result in
+        let task = try! provider.perform(using: configuration) { result in
             switch result.response {
             case .value(let user):
                 XCTAssert(user.name == "Gabriele", "Wrong Decoded Object")
@@ -78,7 +78,7 @@ class HTTPDataProviderTests: XCTestCase {
         
         transport.inject(configuration, data: wrongData, statusCode: 200)
         
-        let task = provider.perform(using: configuration) { result in
+        let task = try! provider.perform(using: configuration) { result in
             switch result {
             case .failure(let error):
                 XCTAssert(type(of: error) == DecodingError.self, "Should be a decoding error")
@@ -102,7 +102,7 @@ class HTTPDataProviderTests: XCTestCase {
         
         transport.inject(configuration, data: userData, statusCode: 200)
         
-        let task = provider.perform(using: configuration) { result in
+        let task = try! provider.perform(using: configuration) { result in
             switch result.response {
             case .emptyValue:
                 break
@@ -126,7 +126,7 @@ class HTTPDataProviderTests: XCTestCase {
         
         transport.inject(configuration, data: nil, statusCode: 200)
         
-        let task = provider.perform(using: configuration) { result in
+        let task = try! provider.perform(using: configuration) { result in
             switch result.response {
             case .emptyValue:
                 break
@@ -150,7 +150,7 @@ class HTTPDataProviderTests: XCTestCase {
         
         transport.inject(configuration, data: apiErrorData, statusCode: 400)
         
-        let task = provider.perform(using: configuration) { result in
+        let task = try! provider.perform(using: configuration) { result in
             switch result.response {
             case .error(let error):
                 XCTAssert((error as? ApiError)?.code == 1234, "ApiError Expected")
@@ -174,7 +174,7 @@ class HTTPDataProviderTests: XCTestCase {
         
         transport.inject(configuration, data: wrongData, statusCode: 400)
         
-        let task = provider.perform(using: configuration) { result in
+        let task = try! provider.perform(using: configuration) { result in
             switch result {
             case .failure(let error):
                 XCTAssert(type(of: error) == DecodingError.self, "Should be a decoding error")
@@ -198,7 +198,7 @@ class HTTPDataProviderTests: XCTestCase {
         
         transport.inject(configuration, data: userData, statusCode: 400)
         
-        let task = provider.perform(using: configuration) { result in
+        let task = try! provider.perform(using: configuration) { result in
             switch result.response {
             case .emptyError(let error):
                 XCTAssert((error as? FakeHTTPTransportError) == .genericError, "Fake Generic Error Expected")
@@ -222,7 +222,7 @@ class HTTPDataProviderTests: XCTestCase {
         
         transport.inject(configuration, data: nil, statusCode: 400)
         
-        let task = provider.perform(using: configuration) { result in
+        let task = try! provider.perform(using: configuration) { result in
             switch result.response {
             case .emptyError(let error):
                 XCTAssert((error as? FakeHTTPTransportError) == .genericError, "Fake Generic Error Expected")
@@ -244,7 +244,7 @@ class HTTPDataProviderTests: XCTestCase {
                 
         let configuration = URLRequestConfiguration<Void, Error>(route: Routes.user)
                 
-        let task = provider.perform(using: configuration) { result in
+        let task = try! provider.perform(using: configuration) { result in
             switch result {
             case .failure(let error):
                 XCTAssert((error as? HTTPDataProviderError) == .invalidResponse, "Fake Generic Error Expected")

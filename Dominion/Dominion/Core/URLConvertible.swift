@@ -8,12 +8,16 @@
 
 import Foundation
 
+public enum URLConvertibleError: Error {
+    case invalidURL(URLConvertible)
+}
+
 public protocol URLConvertible {
-    var asUrl: URL { get }
+    var asUrl: URL? { get }
 }
 
 extension URL: URLConvertible {
-    public var asUrl: URL {
+    public var asUrl: URL? {
         return self
     }
 }

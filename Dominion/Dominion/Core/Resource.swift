@@ -107,18 +107,24 @@ public class Resource<C: ResourceConfiguration, P: ResourceProvider> where C.Req
     }
     
     private func perform(with configuration: C) {
-        let task = provider.perform(using: configuration) { [weak self] result in
-            self?.safe.execute {
-                self?.updateState(with: result)
-                
-                self?.observers.forEach { $0.emit(result) }
-                // In this place because to avoid endless loop starting a refresh
-                // or another addObserver from the observer emission.
-                self?.task = nil
+        do {
+            let task = try provider.perform(using: configuration) { [weak self] result in
+                self?.safe.execute {
+                    self?.updateState(with: result)
+                    
+                    self?.observers.forEach { $0.emit(result) }
+                    // In this place because to avoid endless loop starting a refresh
+                    // or another addObserver from the observer emission.
+                    self?.task = nil
+                }
             }
+            self.task = task
+            task.resume()
+        } catch {
+            let result: Result<Response<C.Downstream>, Error> = .failure(error)
+            self.updateState(with: result)
+            self.observers.forEach { $0.emit(result)}
         }
-        self.task = task
-        task.resume()
     }
     
     private func addObserver(_ callback: @escaping ObservationCallback<Response<C.Downstream>>) -> CancellationToken {

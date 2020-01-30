@@ -21,7 +21,7 @@ class FakeHTTPTransportTests: XCTestCase {
         
         provider.inject(configuration, data: userData, statusCode: 200)
         
-        let task = provider.task(with: configuration.request) { (data, response, error) in
+        let task = try! provider.task(with: configuration.request()) { (data, response, error) in
             XCTAssert(data != nil, "Data should not be nil")
             XCTAssert(response != nil, "Response should not be nil")
             XCTAssert(error == nil, "Error should be nil")
@@ -40,7 +40,7 @@ class FakeHTTPTransportTests: XCTestCase {
         
         provider.inject(configuration, data: apiErrorData, statusCode: 400)
         
-        let task = provider.task(with: configuration.request) { (data, response, error) in
+        let task = try! provider.task(with: configuration.request()) { (data, response, error) in
             XCTAssert(data != nil, "Data should not be nil")
             XCTAssert(response != nil, "Response should not be nil")
             XCTAssert(error != nil, "Error should not be nil")
@@ -56,7 +56,7 @@ class FakeHTTPTransportTests: XCTestCase {
         
         let configuration = URLRequestConfiguration<User, ApiError>(route: Routes.user)
         
-        let task = provider.task(with: configuration.request) { (data, response, error) in
+        let task = try! provider.task(with: configuration.request()) { (data, response, error) in
             XCTAssert(data == nil, "Data should be nil")
             XCTAssert(response == nil, "Response should be nil")
             XCTAssert((error as? FakeHTTPTransportError) == .responseNotFound, "Response should be unknown")
@@ -76,7 +76,7 @@ class FakeHTTPTransportTests: XCTestCase {
         
         provider.cleanup()
         
-        let task = provider.task(with: configuration.request) { (data, response, error) in
+        let task = try! provider.task(with: configuration.request()) { (data, response, error) in
             XCTAssert(data == nil, "Data should be nil")
             XCTAssert(response == nil, "Response should be nil")
             XCTAssert((error as? FakeHTTPTransportError) == .responseNotFound, "Response should be unknown")
