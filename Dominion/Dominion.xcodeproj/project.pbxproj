@@ -134,6 +134,7 @@
 		E41D729223D50EF900422D9F /* URLRequestConfiguration+Codable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "URLRequestConfiguration+Codable.swift"; sourceTree = "<group>"; };
 		E48588AE23E39A59009509B0 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; name = README.md; path = ../../README.md; sourceTree = "<group>"; };
 		E48588B023E39A89009509B0 /* LICENSE */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = LICENSE; path = ../../LICENSE; sourceTree = "<group>"; };
+		E48588B423E39F46009509B0 /* Dominion-logo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Dominion-logo.png"; path = "../../Dominion-logo.png"; sourceTree = "<group>"; };
 		E4BD7ABD23DA401300D883D8 /* DominionAppTest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DominionAppTest.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E4BD7ABF23DA401300D883D8 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		E4BD7AC123DA401300D883D8 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -208,6 +209,7 @@
 				E4196A2E23D3E21000E9D471 /* Info.plist */,
 				E48588B023E39A89009509B0 /* LICENSE */,
 				E48588AE23E39A59009509B0 /* README.md */,
+				E48588B423E39F46009509B0 /* Dominion-logo.png */,
 			);
 			path = Dominion;
 			sourceTree = "<group>";
