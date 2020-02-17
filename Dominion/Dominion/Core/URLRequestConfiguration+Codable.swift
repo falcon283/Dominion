@@ -10,6 +10,15 @@ import Foundation
 
 public extension URLRequestConfiguration where O: Decodable, E == Error {
     
+    /// Convenience Initializer to create a configuration based on the given decodable transformer.
+    /// - Parameters:
+    ///   - route: The route of the resource.
+    ///   - method: The method for the resource. Default get.
+    ///   - headers: the headers of the resource. Default empty.
+    ///   - cachePolicy: The cache policy of the resource. Default `.returnCacheDataElseLoad`
+    ///   - timeout: The timeout to use while creating the network request. Default 60 seconds.
+    ///   - expiration: The expiration behaviour. Default `.never`
+    ///   - downstream: The downstream transformer. Default uses a standard JSONDecoder
     init(route: URLConvertible,
          method: HTTPMethod = .get,
          headers: [String: String] = [:],
@@ -29,6 +38,16 @@ public extension URLRequestConfiguration where O: Decodable, E == Error {
                   error: EmptyTransformer())
     }
     
+    /// Convenience Initializer to create a configuration based on the given decodable transformers.
+    /// - Parameters:
+    ///   - route: The route of the resource.
+    ///   - method: The method for the resource. Default get.
+    ///   - headers: the headers of the resource. Default empty.
+    ///   - cachePolicy: The cache policy of the resource. Default `.returnCacheDataElseLoad`
+    ///   - timeout: The timeout to use while creating the network request. Default 60 seconds.
+    ///   - expiration: The expiration behaviour. Default `.never`
+    ///   - upstream: The upstream transformer.
+    ///   - downstream: The downstream transformer. Default uses a standard JSONDecoder.
     init<TU: Transformer>(
         route: URLConvertible,
         method: HTTPMethod = .get,
@@ -51,6 +70,17 @@ public extension URLRequestConfiguration where O: Decodable, E == Error {
                       error: EmptyTransformer())
     }
     
+    /// Convenience Initializer to create a configuration based on the given transformers.
+    /// - Parameters:
+    ///   - route: The route of the resource.
+    ///   - method: The method for the resource. Default get.
+    ///   - headers: the headers of the resource. Default empty.
+    ///   - cachePolicy: The cache policy of the resource. Default `.returnCacheDataElseLoad`
+    ///   - timeout: The timeout to use while creating the network request. Default 60 seconds.
+    ///   - expiration: The expiration behaviour. Default `.never`
+    ///   - body: The body object to encode within the request.
+    ///   - encoder: The encoder to use for the serialization. Defualt use a standard JSONEncoder.
+    ///   - downstream: The downstream transformer. Default uses a standard JSONDecoder.
     init<I: Encodable>(
         route: URLConvertible,
         method: HTTPMethod = .get,
@@ -76,6 +106,16 @@ public extension URLRequestConfiguration where O: Decodable, E == Error {
 
 public extension URLRequestConfiguration where O: Decodable, E: Decodable {
     
+    /// Convenience Initializer to create a configuration based on the given transformers.
+    /// - Parameters:
+    ///   - route: The route of the resource.
+    ///   - method: The method for the resource. Default get.
+    ///   - headers: the headers of the resource. Default empty.
+    ///   - cachePolicy: The cache policy of the resource. Default `.returnCacheDataElseLoad`
+    ///   - timeout: The timeout to use while creating the network request. Default 60 seconds.
+    ///   - expiration: The expiration behaviour. Default `.never`
+    ///   - downstream: The downstream transformer. Default uses a standard JSONDecoder.
+    ///   - error: The error transformer. Default uses a standard JSONDecoder.
     init(route: URLConvertible,
          method: HTTPMethod = .get,
          headers: [String: String] = [:],
@@ -96,6 +136,17 @@ public extension URLRequestConfiguration where O: Decodable, E: Decodable {
                   error: error)
     }
     
+    /// Convenience Initializer to create a configuration based on the given transformers.
+    /// - Parameters:
+    ///   - route: The route of the resource.
+    ///   - method: The method for the resource. Default get.
+    ///   - headers: the headers of the resource. Default empty.
+    ///   - cachePolicy: The cache policy of the resource. Default `.returnCacheDataElseLoad`
+    ///   - timeout: The timeout to use while creating the network request. Default 60 seconds.
+    ///   - expiration: The expiration behaviour. Default `.never`
+    ///   - upstream: The upstream transformer.
+    ///   - downstream: The downstream transformer. Default uses a standard JSONDecoder.
+    ///   - error: The error transformer. Default uses a standard JSONDecoder.
     init<TU: Transformer>(
         route: URLConvertible,
         method: HTTPMethod = .get,
@@ -121,6 +172,18 @@ public extension URLRequestConfiguration where O: Decodable, E: Decodable {
             }
     }
     
+    /// Convenience Initializer to create a configuration based on the given transformers.
+    /// - Parameters:
+    ///   - route: The route of the resource.
+    ///   - method: The method for the resource. Default get.
+    ///   - headers: the headers of the resource. Default empty.
+    ///   - cachePolicy: The cache policy of the resource. Default `.returnCacheDataElseLoad`
+    ///   - timeout: The timeout to use while creating the network request. Default 60 seconds.
+    ///   - expiration: The expiration behaviour. Default `.never`
+    ///   - body: The body object to encode within the request.
+    ///   - encoder: The encoder to use for the serialization. Defualt use a standard JSONEncoder.
+    ///   - downstream: The downstream transformer. Default uses a standard JSONDecoder.
+    ///   - error: The error transformer. Default uses a standard JSONDecoder.
     init<I: Encodable>(
         route: URLConvertible,
         method: HTTPMethod = .get,

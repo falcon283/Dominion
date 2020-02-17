@@ -8,12 +8,15 @@
 
 import Foundation
 
+/// An Encodable Transformer
 public struct EncodableTransformer<I: Encodable>: Transformer {
     
     public typealias O = Data
     
     private let encoder: JSONEncoder
     
+    /// Designated initializer
+    /// - Parameter encoder: The encoder to use for the mapping.
     public init(encoder: JSONEncoder = JSONEncoder()) {
         self.encoder = encoder
     }
@@ -24,12 +27,15 @@ public struct EncodableTransformer<I: Encodable>: Transformer {
     }
 }
 
+/// A Decodable Transformer
 public struct DecodableTransformer<O: Decodable>: Transformer {
     
     public typealias I = Data
     
     private let decoder: JSONDecoder
     
+    /// Designated initializer
+    /// - Parameter decoder: The decoder to use for the mapping.
     public init(decoder: JSONDecoder = JSONDecoder()) {
         self.decoder = decoder
     }

@@ -19,8 +19,8 @@ class ResourceServiceTests: XCTestCase {
         let c1 = URLRequestConfiguration(route: Routes.user)
         let c2 = URLRequestConfiguration(route: Routes.user)
 
-        let resource1 = service.getResource(for: c1)
-        let resource2 = service.getResource(for: c2)
+        let resource1 = service[resource: c1]
+        let resource2 = service[resource: c2]
         
         XCTAssert(resource1 === resource2, "Resource should be cached")
     }

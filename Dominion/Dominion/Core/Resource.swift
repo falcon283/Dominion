@@ -9,14 +9,21 @@
 import Foundation
 
 
+/// A Resource is the central object in Dominion. Once obtained can be observed for future updates.
 public class Resource<C: ResourceConfiguration, P: ResourceProvider> where C.Request == P.Request {
     
+    /// The internal status of the resoirce
     enum ResourceState {
+        
+        /// Initial status
         case initial
+        
+        /// Resource has data to provide externally.
         case data(Response<C.Downstream>)
+        
+        /// The Resource is in error state.
         case error(Error)
     }
-    
     
     private let safe = platformSafe
     private var observers: [ResourceObserver<Response<C.Downstream>>] = []
@@ -43,11 +50,16 @@ public class Resource<C: ResourceConfiguration, P: ResourceProvider> where C.Req
     
     private var resultDate: Date?
     
+    /// Designated initializer.
+    /// - Parameters:
+    ///   - configuration: The configuration of the resource.
+    ///   - provider: The provider for the resource.
     public init(with configuration: C, using provider: P) {
         self.configuration = configuration
         self.provider = provider
     }
     
+    /// True if resource is expired. The expiration behaviour is based on the configuration.
     var isResourceExpired: Bool {
         
         switch configuration.expiration {
@@ -63,14 +75,22 @@ public class Resource<C: ResourceConfiguration, P: ResourceProvider> where C.Req
         }
     }
     
+    /// True if the resource is in the request process and it's waiting for a result.
     var isRunning: Bool {
         self.task != nil
     }
- 
+    
+    /// Attach an external observer to the resource. Multiple observers can be added susequently. The first attached observer makes the resource load.
+    /// Subsequent observer will trigger a reload based on the expiration behaviour. If the resource is not yet expired and is not in error, a subsequent attached
+    /// observer will immediately receive the given underlying result.
+    /// - Parameter callback: The given callback is the observer for the resource. The block is kept alive untill the CancellationToken is deallocated.
+    /// - Returns: A memory management object. Once the token is deallocated, the callback is destroyed and will not be called anymore in case of
+    /// subsequent updates.
     public func observe(with callback: @escaping ObservationCallback<Response<C.Downstream>>) -> CancellationToken {
         addObserver(callback)
     }
-
+    
+    /// Force the refresh of the resource. It's force a reload of the resource disregarding the expiration  behaviour.
     public func refresh() {
         safe.execute {
             guard observers.count > 0, isRunning == false else { return }

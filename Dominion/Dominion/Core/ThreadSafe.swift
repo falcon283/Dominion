@@ -8,11 +8,15 @@
 
 import Foundation
 
+/// Thread safety Protocol
 public protocol ThreadSafety {
+    /// Execute a task in a thread safe manner.
+    /// - Parameter block: The task to execute.
     func execute(_ block: () -> Void)
 }
 
 @available(iOS 10.0, *)
+/// This object use an `os_unfair_lock` internally to handle the resource exclusive access.
 public final class ThreadSafe: ThreadSafety {
     
     private var lock = os_unfair_lock_s()
@@ -26,6 +30,7 @@ public final class ThreadSafe: ThreadSafety {
     }
 }
 
+/// A legacy ThreadSafe executor that uses an `NSRecursiveLock` internally to handle the resource exclusive access.
 public final class ThreadSafeLegacy: ThreadSafety {
     
     private var lock = NSRecursiveLock()
@@ -36,6 +41,7 @@ public final class ThreadSafeLegacy: ThreadSafety {
     }
 }
 
+/// A global variable that switch the usage of the ThreadSafety implementation based on the current executing system.
 public var platformSafe: ThreadSafety {
     if #available(iOS 10.0, *) {
         return ThreadSafe()

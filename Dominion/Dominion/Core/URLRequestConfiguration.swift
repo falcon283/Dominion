@@ -27,6 +27,7 @@ public struct Upstream<T, I> {
     }
 }
 
+/// A ResourceConfiguration object usefull for Network request based on URLRequest.
 public struct URLRequestConfiguration<O, E: Error>: ResourceConfiguration {
     
     public typealias Request = URLRequest
@@ -40,6 +41,13 @@ public struct URLRequestConfiguration<O, E: Error>: ResourceConfiguration {
     private let downstream: (Data?) throws -> O
     private let error: (Data?) throws -> E
     
+    /// Designated initializer
+    /// - Parameters:
+    ///   - cacheIdentifier: The cache identifiier to use within the ResourceService.
+    ///   - expiration: The expiration behaviour.
+    ///   - downstream: The downstream transformer.
+    ///   - error: The error transformer
+    ///   - request: The request object builder.
     public init<TD: Transformer, TE: Transformer>(
         cacheIdentifier: String?,
         expiration: ResourceExpiration = .never,
@@ -55,6 +63,17 @@ public struct URLRequestConfiguration<O, E: Error>: ResourceConfiguration {
             self.error = error.getTransformed
     }
     
+    /// Convenience Initializer to create a configuration based on the given transformers.
+    /// - Parameters:
+    ///   - route: The route of the resource.
+    ///   - method: The method for the resource. Default get.
+    ///   - headers: the headers of the resource. Default empty.
+    ///   - cachePolicy: The cache policy of the resource. Default `.returnCacheDataElseLoad`
+    ///   - timeout: The timeout to use while creating the network request. Default 60 seconds.
+    ///   - expiration: The expiration behaviour. Default `.never`
+    ///   - upstream: The upstream transformer.
+    ///   - downstream: The downstream transformer.
+    ///   - error: The error transformer
     public init<TU: Transformer, TD: Transformer, TE: Transformer>(
         route: URLConvertible,
         method: HTTPMethod = .get,
@@ -120,29 +139,47 @@ extension URLRequestConfiguration {
 
 public extension URLRequestConfiguration where O == Void {
     
-    init<TE: Transformer>(route: URLConvertible,
-         method: HTTPMethod = .get,
-         headers: [String: String] = [:],
-         cachePolicy: URLRequest.CachePolicy = .returnCacheDataElseLoad,
-         timeout: TimeInterval = 60.0,
-         expiration: ResourceExpiration = .never,
-         error: TE)
+    /// Convenience Initializer to create a configuration based on the given transformer error ignoring the incoming downstream.
+    /// - Parameters:
+    ///   - route: The route of the resource.
+    ///   - method: The method for the resource. Default get.
+    ///   - headers: the headers of the resource. Default empty.
+    ///   - cachePolicy: The cache policy of the resource. Default `.returnCacheDataElseLoad`
+    ///   - timeout: The timeout to use while creating the network request. Default 60 seconds.
+    ///   - expiration: The expiration behaviour. Default `.never`
+    ///   - error: The error transformer
+    init<TE: Transformer>(
+        route: URLConvertible,
+        method: HTTPMethod = .get,
+        headers: [String: String] = [:],
+        cachePolicy: URLRequest.CachePolicy = .returnCacheDataElseLoad,
+        timeout: TimeInterval = 60.0,
+        expiration: ResourceExpiration = .never,
+        error: TE)
         where TE.I == Data, TE.O == E {
-        
-        self.init(route: route,
-                  method: method,
-                  headers: headers,
-                  cachePolicy: cachePolicy,
-                  timeout: timeout,
-                  expiration: expiration,
-                  upstream: Upstream(with: EmptyTransformer(), using: ()),
-                  downstream: EmptyTransformer(),
-                  error: error)
+            
+            self.init(route: route,
+                      method: method,
+                      headers: headers,
+                      cachePolicy: cachePolicy,
+                      timeout: timeout,
+                      expiration: expiration,
+                      upstream: Upstream(with: EmptyTransformer(), using: ()),
+                      downstream: EmptyTransformer(),
+                      error: error)
     }
 }
 
 public extension URLRequestConfiguration where O == Void, E == Error {
     
+    /// Convenience Initializer to create a configuration ignoring downstream and custom error..
+    /// - Parameters:
+    ///   - route: The route of the resource.
+    ///   - method: The method for the resource. Default get.
+    ///   - headers: the headers of the resource. Default empty.
+    ///   - cachePolicy: The cache policy of the resource. Default `.returnCacheDataElseLoad`
+    ///   - timeout: The timeout to use while creating the network request. Default 60 seconds.
+    ///   - expiration: The expiration behaviour. Default `.never`
     init(route: URLConvertible,
          method: HTTPMethod = .get,
          headers: [String: String] = [:],

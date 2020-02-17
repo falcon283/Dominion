@@ -8,10 +8,13 @@
 
 import Foundation
 
+/// A Transformer implemented by providing a mapping function
 public struct BlockTransformer<I, O>: Transformer {
         
     private let transform: (I) throws -> O
     
+    /// Designated initializer
+    /// - Parameter closure: A mapping function
     public init(tranform closure: @escaping (I) throws -> O) {
         self.transform = closure
     }

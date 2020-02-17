@@ -8,7 +8,17 @@
 
 import Foundation
 
+/// An HTTPProtocol is an object responsible for the execution of the row URL request and receive the incoming data or error.
 public protocol HTTPTransport {
     
-    func task(with request: URLRequest, completion: @escaping (Data?, URLResponse?, Error?) -> Void) -> ResourceTask
+    /// Execute the network task and wait for incoming data.
+    /// - Parameters:
+    ///   - request: The network request to send.
+    ///   - completion: A completion object responsible to handle the incoming data, inspecting the response and handle the error eventually.
+    ///   - data: the incoming data of the request
+    ///   - response: The URLResponse of the reuqest.
+    ///   - error: The error of the request.
+    /// - Returns: The resource task to use to handle the network request.
+    func task(with request: URLRequest,
+              completion: @escaping (_ data: Data?, _ response: URLResponse?, _ error: Error?) -> Void) -> ResourceTask
 }

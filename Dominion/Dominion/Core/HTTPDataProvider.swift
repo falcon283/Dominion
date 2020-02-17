@@ -13,14 +13,18 @@ enum HTTPDataProviderError: Error {
     case invalidResponse
 }
 
+/// A provider suitable for non local request. Request is of `URLRequest` type and a network request is performed in order to retrieve the resource.
 open class HTTPDataProvider: ResourceProvider {
     
     public typealias Request = URLRequest
-
+    
+    /// The headers to use for all the network requests.
     public var commonHeaders: [String: String] = [:]
     
     private let transport: HTTPTransport
     
+    /// Designated initializer.
+    /// - Parameter transport: The transport used to execute the raw request.
     public init(with transport: HTTPTransport) {
         self.transport = transport
     }

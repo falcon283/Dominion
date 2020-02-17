@@ -8,10 +8,13 @@
 
 import Foundation
 
+/// A ResourceTask suitable for URLSesssion requests.
 class URLSessionResourceTask: ResourceTask {
     
     private let task: URLSessionTask
     
+    /// Designated initializer
+    /// - Parameter task: The task to wrap.
     init(with task: URLSessionTask) {
         self.task = task
     }
