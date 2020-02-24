@@ -49,6 +49,7 @@
 		E4625C902402C547006D595A /* RecoveryResourceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4625C8F2402C547006D595A /* RecoveryResourceTests.swift */; };
 		E4625C922402C92E006D595A /* RetryResourceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4625C912402C92E006D595A /* RetryResourceTests.swift */; };
 		E4625C942402DEDC006D595A /* RetryTimeFunctionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4625C932402DEDC006D595A /* RetryTimeFunctionTests.swift */; };
+		E4625C9624035098006D595A /* Resource+CombineTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4625C9524035098006D595A /* Resource+CombineTests.swift */; };
 		E48588AF23E39A59009509B0 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = E48588AE23E39A59009509B0 /* README.md */; };
 		E48588B123E39A89009509B0 /* LICENSE.md in Resources */ = {isa = PBXBuildFile; fileRef = E48588B023E39A89009509B0 /* LICENSE.md */; };
 		E4BD7AC023DA401300D883D8 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4BD7ABF23DA401300D883D8 /* AppDelegate.swift */; };
@@ -146,6 +147,7 @@
 		E4625C8F2402C547006D595A /* RecoveryResourceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecoveryResourceTests.swift; sourceTree = "<group>"; };
 		E4625C912402C92E006D595A /* RetryResourceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RetryResourceTests.swift; sourceTree = "<group>"; };
 		E4625C932402DEDC006D595A /* RetryTimeFunctionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RetryTimeFunctionTests.swift; sourceTree = "<group>"; };
+		E4625C9524035098006D595A /* Resource+CombineTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Resource+CombineTests.swift"; sourceTree = "<group>"; };
 		E48588AE23E39A59009509B0 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; name = README.md; path = ../../README.md; sourceTree = "<group>"; };
 		E48588B023E39A89009509B0 /* LICENSE.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; name = LICENSE.md; path = ../../LICENSE.md; sourceTree = "<group>"; };
 		E48588B423E39F46009509B0 /* Dominion-logo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Dominion-logo.png"; path = "../../Dominion-logo.png"; sourceTree = "<group>"; };
@@ -283,6 +285,7 @@
 				E4625C8F2402C547006D595A /* RecoveryResourceTests.swift */,
 				E4625C912402C92E006D595A /* RetryResourceTests.swift */,
 				E4625C932402DEDC006D595A /* RetryTimeFunctionTests.swift */,
+				E4625C9524035098006D595A /* Resource+CombineTests.swift */,
 				E4196A6B23D475A900E9D471 /* ThreadSafeTests.swift */,
 				E4196A6D23D475E400E9D471 /* TransformerTests.swift */,
 				E40AE6E123D910F3009C46DA /* URLConvertibleTests.swift */,
@@ -531,6 +534,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				E4196A6A23D4759100E9D471 /* ResourceObserverTests.swift in Sources */,
+				E4625C9624035098006D595A /* Resource+CombineTests.swift in Sources */,
 				E4196A6E23D475E400E9D471 /* TransformerTests.swift in Sources */,
 				E4196A7623D47EE200E9D471 /* FakeTransportResourceTaskTests.swift in Sources */,
 				E4196A7823D47EEE00E9D471 /* FakeHTTPTransportTests.swift in Sources */,
