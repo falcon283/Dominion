@@ -35,11 +35,11 @@ class ReposViewModel: ObservableObject {
         token = $searchText
             .filter { $0.count > 2 }
             .debounce(for: 0.5, scheduler: DispatchQueue.main, options: nil)
-            .map { Container.gitHub.repos(for: $0).publisher.replaceError(with: .value([])) }
+            .map { Container.gitHub.repos(for: $0).publisher().replaceError(with: .success(.value([]))) }
             .switchToLatest()
             .eraseToAnyPublisher()
             .print()
-            .sink { [weak self] in self?.repos = $0.value ?? [] }
+            .sink { [weak self] in self?.repos = (try? $0.get())?.value ?? [] }
     }
 }
 

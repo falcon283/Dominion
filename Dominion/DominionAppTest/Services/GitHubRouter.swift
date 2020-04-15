@@ -33,7 +33,7 @@ extension GitHubRouter: URLConvertible {
             var c = Self.components
             c.path = "/users/\(name)/repos"
             return c.url
-        case.authorizationRefresh
+        case.authorizationRefresh:
             var c = Self.components
             c.path = "/refreshToken"
             return c.url

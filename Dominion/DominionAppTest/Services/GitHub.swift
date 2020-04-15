@@ -40,8 +40,8 @@ extension GitHub {
     
     func authRefresh(for token: String) -> GitHubResource<AuthToken> {
         getResource(for: GitHubResourceConfiguration(route: GitHubRouter.authorizationRefresh,
-                                                     cachePolicy: reloadIgnoringLocalCacheData,
-                                                     headers: ["Auth": token]
+                                                     headers: ["Auth": token],
+                                                     cachePolicy: .reloadIgnoringLocalCacheData,
                                                      downstream: .init(decoder: Self.decoder)))
     }
 
@@ -52,12 +52,12 @@ struct AuthToken: Decodable {
     let token: String
 }
 
-extension Resource {
+extension Resource where P == HTTPDataProvider {
     
     func withGitHubAuthRevovery() -> Resource<C, P> {
-        recover(with: Container.gitHub.authRefresh(for: "token"),
-                     shouldRecovery: { _ in true },
-                     recovery: { _ in /* Container.gitHub.updateToken */ })
+        recover(using: Container.gitHub.authRefresh(for: "token"),
+                shouldRecovery: { _ in true },
+                recovery: { _ in /* Container.gitHub.updateToken */ })
     }
 }
 
